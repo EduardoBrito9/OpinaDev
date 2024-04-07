@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { supabase } from "../lib/helper/supabaseClient";
 import { useMyContext } from "../context.tsx/functionContext";
-
+import { login, logout } from "../lib/helper/funcLogin/authUser.service";
 
 const Nav = () => {
-  const { user, setUser } = useMyContext;
+  const { user, setUser } = useMyContext();
+  // const ref = useRef();
   useEffect(() => {
     const session = async () => {
       const { data } = await supabase.auth.getSession();
@@ -30,28 +31,39 @@ const Nav = () => {
     };
     session();
   }, [setUser]);
-  const login = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: "github",
-    });
+  const handlelogin = async () => {
+    try {
+      await login();
+    } catch (error) {
+      console.log("Erro ao fazer login", error);
+    }
   };
 
-  const logout = async () => {
-    await supabase.auth.signOut();
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.log("Erro ao fazer logout", error);
+    }
   };
 
   return (
     <div>
-      {user && "id" in user ? (
-        <div>
-          <h1>user</h1>
-          <button onClick={logout}>Sign Out</button>
-        </div>
-      ) : (
-        <button onClick={login} className="bg-black text-white">
-          Login
-        </button>
-      )}
+      <div className=" flex justify-between">
+        <h1 className="text-3xl font-bold">DevOpina</h1>
+        {user && "id" in user ? (
+          <button
+            onClick={handleLogout}
+            className=" rounded-full border-4 border-green-400 h-16 w-16 overflow-hidden"
+          >
+            {/* <img src={user.user_metadata.avatar_url} alt="" /> */}
+          </button>
+        ) : (
+          <button onClick={handlelogin} className="bg-black text-white">
+            Login
+          </button>
+        )}
+      </div>
     </div>
   );
 };

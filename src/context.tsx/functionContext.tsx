@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { MyContext } from "./Context";
 
-const useMyContext = () => {
+export const useMyContext = () => {
   const context = useContext(MyContext);
   if (!context) {
     throw new Error(
@@ -11,4 +11,3 @@ const useMyContext = () => {
   return context;
 };
 
-export { useMyContext };
