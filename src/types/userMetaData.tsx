@@ -1,3 +1,4 @@
+//interface responsavel por garantir o tipo de userMetaData que o estado vai aceitar
 export interface UserMetadataIN {
   avatar_url: string;
   email: string;

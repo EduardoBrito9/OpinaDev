@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { supabase } from "../lib/helper/supabaseClient";
 import { useMyContext } from "../context/functionContext";
 import { login, logout } from "../lib/helper/funcLogin/authUser.service";
 import { CiSettings } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import { GiPadlockOpen } from "react-icons/gi";
+import { FaGithub } from "react-icons/fa";
 
 import {
   validateSession,
@@ -12,9 +13,14 @@ import {
 } from "../validateFunctions/validateDataType";
 import { UserIN } from "../types/User";
 
-const Nav = () => {
+interface PropType {
+  modalRef: React.MutableRefObject<HTMLDivElement | null>;
+  miniModal: boolean;
+  setMiniModal: (miniModal: boolean) => void;
+}
+
+const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
   const { user, setUser } = useMyContext();
-  const [miniModal, setMiniModal] = useState(false);
 
   useEffect(() => {
     const session = async () => {
@@ -121,17 +127,17 @@ const Nav = () => {
         "user_metadata" in user &&
         "aud" in user &&
         user.aud === "authenticated" ? (
-          <div className=" relative">
+          <div ref={modalRef} className=" relative">
             <button
               onClick={handleModal}
-              className=" hover:scale-125 transition rounded-full border-4 border-green-500 h-14 w-14 overflow-hidden"
+              className=" animate-renderAnimation hover:scale-125 transition rounded-full border-4 border-green-500 h-14 w-14 overflow-hidden"
             >
               {validatingPhoto(user.user_metadata) && (
                 <img src={user.user_metadata.avatar_url} alt="" />
               )}
             </button>
             {miniModal && (
-              <div className=" absolute space-y-4 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-opacity opacity-1 duration-500">
+              <div className="  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
                 <div>
                   <button className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition">
                     Profile <CiSettings className=" w-5 h-5" />
@@ -151,8 +157,11 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          <button onClick={handlelogin} className="bg-black text-white">
-            Login
+          <button
+            onClick={handlelogin}
+            className=" animate-renderAnimation border border-zinc-400 p-2 px-8 flex items-center gap-3 bg-black text-white text-sm rounded-lg hover:border-green-500 hover:bg-modalColor transition"
+          >
+            <FaGithub /> Login
           </button>
         )}
       </div>

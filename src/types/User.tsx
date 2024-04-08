@@ -1,6 +1,6 @@
 import { AppMetadataIN } from "./appMetaData";
 import { UserMetadataIN } from "./userMetaData";
-
+//interface responsavel por garantir o tipo de User que o estado vai aceitar
 export interface UserIN {
   app_metadata: AppMetadataIN;
   aud: string;

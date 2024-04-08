@@ -23,6 +23,22 @@
           transform: translate(4px, -2px);
         }
       }
+      @keyframes renderAnimation {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes renderAnimationModal {
+        from {
+          transform: scale(0.9);
+        }
+        to {
+          transform: initial;
+        }
+      }
     </style>
 
     <script type="module" src="/src/main.tsx"></script>

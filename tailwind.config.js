@@ -11,6 +11,9 @@ export default {
       },
       animation: {
         upup: "upup 1s infinite",
+        renderAnimation: "renderAnimation 1s forwards",
+         renderAnimationModal: " renderAnimationModal 0.2s forwards",
+       
       },
     },
   },
