@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useState } from "react";
-import { UserIN } from "../types/User";
+import { UserIN } from "../types/userTypes/User";
 //interface para os estados que vou usar no context
 interface MyContextType {
   user: UserIN;

@@ -9,7 +9,7 @@ export interface UserIN {
   email: string;
   email_confirmed_at: string;
   id: string;
-  identities: []; 
+  identities: [];
   is_anonymous: boolean;
   last_sign_in_at: string;
   phone: string;

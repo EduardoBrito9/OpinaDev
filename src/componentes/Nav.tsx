@@ -1,86 +1,16 @@
-import React, { useEffect } from "react";
-import { supabase } from "../lib/helper/supabaseClient";
+import React from "react";
 import { useMyContext } from "../context/functionContext";
-import { login, logout } from "../lib/helper/funcLogin/authUser.service";
-import { CiSettings } from "react-icons/ci";
-import { FiPlus } from "react-icons/fi";
-import { GiPadlockOpen } from "react-icons/gi";
+import { login } from "../lib/helper/funcLogin/authUser.service";
 import { FaGithub } from "react-icons/fa";
-
-import {
-  validateSession,
-  validatingPhoto,
-} from "../validateFunctions/validateDataType";
-import { UserIN } from "../types/User";
-
-interface PropType {
-  modalRef: React.MutableRefObject<HTMLDivElement | null>;
-  miniModal: boolean;
-  setMiniModal: (miniModal: boolean) => void;
-}
+import UserComponent from "./UserComponent";
+import { PropType } from "../types/userTypes/propsTypes/typesProps";
+import { UserEffect } from "../lib/helper/Effects/UserEffect";
 
 const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
-  const { user, setUser } = useMyContext();
+  const { user } = useMyContext();
 
-  useEffect(() => {
-    const session = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (session !== null && validateSession(session)) {
-        setUser(session.user as UserIN);
-        const { data: authListener } = supabase.auth.onAuthStateChange(
-          (event, session) => {
-            switch (event) {
-              case "SIGNED_IN":
-                if (session !== null && validateSession(session)) {
-                  setUser(session.user as UserIN);
-                }
-                break;
-              case "SIGNED_OUT":
-                setUser({
-                  app_metadata: {
-                    provider: "",
-                    providers: [],
-                  },
-                  aud: "",
-                  confirmed_at: "",
-                  created_at: "",
-                  email: "",
-                  email_confirmed_at: "",
-                  id: "",
-                  identities: [],
-                  is_anonymous: false,
-                  last_sign_in_at: "",
-                  phone: "",
-                  role: "",
-                  updated_at: "",
-                  user_metadata: {
-                    avatar_url: "",
-                    email: "",
-                    email_verified: false,
-                    full_name: "",
-                    iss: "",
-                    name: "",
-                    phone_verified: false,
-                    preferred_username: "",
-                    provider_id: "",
-                    sub: "",
-                    user_name: "",
-                  },
-                });
-                break;
-              default:
-            }
-          },
-        );
-        return () => {
-          authListener.subscription.unsubscribe();
-        };
-      }
-    };
-    session();
-  }, [setUser]);
+  UserEffect();
+
   const handlelogin = async () => {
     try {
       await login();
@@ -90,21 +20,9 @@ const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.log("Erro ao fazer logout", error);
-    }
-  };
-
-  const handleModal = () => {
-    setMiniModal(!miniModal);
-  };
-
   return (
     <div>
-      <div className="flex justify-between">
+      <div className="flex justify-between h-[38px] items-center">
         <h1 className="text-3xl font-bold flex gap-2 items-center">
           DevOpina{" "}
           <svg
@@ -127,35 +45,12 @@ const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
         "user_metadata" in user &&
         "aud" in user &&
         user.aud === "authenticated" ? (
-          <div ref={modalRef} className=" relative">
-            <button
-              onClick={handleModal}
-              className=" animate-renderAnimation hover:scale-125 transition rounded-full border-4 border-green-500 h-14 w-14 overflow-hidden"
-            >
-              {validatingPhoto(user.user_metadata) && (
-                <img src={user.user_metadata.avatar_url} alt="" />
-              )}
-            </button>
-            {miniModal && (
-              <div className="  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
-                <div>
-                  <button className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition">
-                    Profile <CiSettings className=" w-5 h-5" />
-                  </button>
-                  <button className="  py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition">
-                    Create <FiPlus className=" w-5 h-5" />
-                  </button>
-                </div>
-
-                <button
-                  className=" py-3 px-4 border-t border-modalColor flex justify-between items-center w-[98%] hover:bg-modalColor transition"
-                  onClick={handleLogout}
-                >
-                  Logout <GiPadlockOpen />
-                </button>
-              </div>
-            )}
-          </div>
+          <UserComponent
+            modalRef={modalRef}
+            setMiniModal={setMiniModal}
+            miniModal={miniModal}
+            user={user}
+          />
         ) : (
           <button
             onClick={handlelogin}

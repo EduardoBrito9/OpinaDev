@@ -1,5 +1,5 @@
-import { UserIN } from "../types/User";
-import { UserMetadataIN } from "../types/userMetaData";
+import { UserIN } from "../types/userTypes/User";
+import { UserMetadataIN } from "../types/userTypes/userMetaData";
 
 //funcao para validar o userMetaData e conseguir acessar as propriedades
 export const validatingPhoto = (value: unknown): value is UserMetadataIN => {
