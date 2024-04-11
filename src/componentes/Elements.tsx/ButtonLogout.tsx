@@ -1,5 +1,5 @@
 import React from "react";
-import { buttonChildren } from "../types/userTypes/propsTypes/typesProps";
+import { buttonChildren } from "../../types/propsTypes/typesProps";
 
 const ButtonProfileOptions: React.FC<buttonChildren> = ({
   children,
@@ -7,7 +7,7 @@ const ButtonProfileOptions: React.FC<buttonChildren> = ({
 }) => {
   return (
     <button
-      className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
+      className=" border-t border-modalColor py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
       onClick={onclickButton}
     >
       {children}

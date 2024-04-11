@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { UserIN } from "../User";
+import { UserIN } from "../userTypes/User";
 
 export interface PropType {
   modalRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -12,4 +12,5 @@ export interface buttonChildren {
   children: ReactNode;
   className?: string;
   onclickButton?: () => void;
+  path?:string;
 }

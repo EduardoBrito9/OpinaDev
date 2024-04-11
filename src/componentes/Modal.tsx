@@ -2,7 +2,8 @@ import { logout } from "../lib/helper/funcLogin/authUser.service";
 import { CiSettings } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import { GiPadlockOpen } from "react-icons/gi";
-import ButtonProfileOptions from "./ButtonProfileOptions";
+import ButtonProfileOptions from "./Elements.tsx/ButtonProfileOptions";
+import ButtonLogout from "./Elements.tsx/ButtonLogout";
 
 const Modal = () => {
   const handleLogout = async () => {
@@ -15,20 +16,17 @@ const Modal = () => {
   return (
     <div className="  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
       <div>
-        <ButtonProfileOptions>
+        <ButtonProfileOptions path="/Profile">
           Profile <CiSettings className=" w-5 h-5" />
         </ButtonProfileOptions>
 
-        <ButtonProfileOptions>
+        <ButtonProfileOptions path="/CreatePost">
           Create <FiPlus className=" w-5 h-5" />
         </ButtonProfileOptions>
       </div>
-      <ButtonProfileOptions
-        onclickButton={handleLogout}
-        className="border-t border-modalColor"
-      >
+      <ButtonLogout onclickButton={handleLogout}>
         Logout <GiPadlockOpen />
-      </ButtonProfileOptions>
+      </ButtonLogout>
     </div>
   );
 };

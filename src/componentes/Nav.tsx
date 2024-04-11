@@ -3,7 +3,7 @@ import { useMyContext } from "../context/functionContext";
 import { login } from "../lib/helper/funcLogin/authUser.service";
 import { FaGithub } from "react-icons/fa";
 import UserComponent from "./UserComponent";
-import { PropType } from "../types/userTypes/propsTypes/typesProps";
+import { PropType } from "../types/propsTypes/typesProps";
 import { UserEffect } from "../lib/helper/Effects/UserEffect";
 
 const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {

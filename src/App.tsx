@@ -1,8 +1,9 @@
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./componentes/Nav";
 import { MyContextProvider } from "./context/Context";
 import { useEffect, useRef, useState } from "react";
+import CreatePost from "./componentes/CreatePost";
 
 function App() {
   const [miniModal, setMiniModal] = useState(false);
@@ -14,12 +15,12 @@ function App() {
   };
   //useEffect que acontece sempre que o estado miniModal altera, caso for true adiciona o evento ao document e inicia a verificacao de click para ver se o click ocorreu fora do modal, chamar a outsideClick function.
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = ({ target }: MouseEvent) => {
       if (
         miniModal &&
         modalRef.current &&
-        event.target !== modalRef.current &&
-        !modalRef.current.contains(event.target as Node)
+        target !== modalRef.current &&
+        !modalRef.current.contains(target as Node)
       ) {
         outsideClick();
       }
@@ -43,6 +44,10 @@ function App() {
             miniModal={miniModal}
             setMiniModal={setMiniModal}
           />
+          {/* <Route path="/" element={<Home />} /> */}
+          <Routes>
+            <Route path="/CreatePost" element={<CreatePost/>} />
+          </Routes>
         </main>
       </BrowserRouter>
     </MyContextProvider>

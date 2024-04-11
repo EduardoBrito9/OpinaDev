@@ -1,5 +1,5 @@
 import { validatingPhoto } from "../validateFunctions/validateDataType";
-import { PropType } from "../types/userTypes/propsTypes/typesProps";
+import { PropType } from "../types/propsTypes/typesProps";
 import Modal from "./Modal";
 
 const UserComponent: React.FC<PropType> = ({
