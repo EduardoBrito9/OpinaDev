@@ -1,7 +1,7 @@
 import React from "react";
-import { buttonChildren } from "../../types/propsTypes/typesProps";
+import { ButtonPropType } from "../../types/propsTypes/typesProps";
 
-const ButtonProfileOptions: React.FC<buttonChildren> = ({
+const ButtonProfileOptions: React.FC<ButtonPropType> = ({
   children,
   onclickButton,
 }) => {

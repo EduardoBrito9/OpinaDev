@@ -14,7 +14,7 @@ const Modal = () => {
     }
   };
   return (
-    <div className="  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
+    <div className=" bg-black  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
       <div>
         <ButtonProfileOptions path="/Profile">
           Profile <CiSettings className=" w-5 h-5" />

@@ -8,9 +8,14 @@ export interface PropType {
   user?: UserIN;
 }
 
-export interface buttonChildren {
+export interface ButtonPropType {
   children: ReactNode;
   className?: string;
   onclickButton?: () => void;
   path?:string;
+}
+
+export interface VoteStateType {
+  votes: string[];
+  setVotes: (votes: string[]) => void;
 }
