@@ -4,10 +4,11 @@ import VoteOptionsCreate from "./VoteOptionsCreate";
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [votes, setVotes] = useState([]);
+  const [votes, setVotes] = useState<string[]>([]);
 
-  const postVerification = () => {
-    console.log("teste");
+  const postVerification = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log(title, description, votes);
   };
   return (
     <form
@@ -44,6 +45,7 @@ const CreatePost = () => {
         name=""
         id=""
       />
+      <button>just a test</button>
     </form>
   );
 };
