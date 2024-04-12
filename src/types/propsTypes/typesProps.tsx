@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { UserIN } from "../userTypes/User";
+import { VoteTypeStructure } from "../voteTypes/voteType";
 
 export interface PropType {
   modalRef: React.MutableRefObject<HTMLDivElement | null>;
@@ -12,10 +13,15 @@ export interface ButtonPropType {
   children: ReactNode;
   className?: string;
   onclickButton?: () => void;
-  path?:string;
+  path?: string;
 }
 
 export interface VoteStateType {
-  votes: string[];
-  setVotes: (votes: string[]) => void;
+  voteOptions: string[];
+  setVoteOptions: (voteOptions: string[]) => void;
+}
+
+export interface VoteSectionType {
+  voteSection: VoteTypeStructure[];
+  setVoteSection: (voteSection: VoteTypeStructure[]) => void;
 }

@@ -1,10 +1,11 @@
 import { VoteStateType } from "../types/propsTypes/typesProps";
 
-const VoteOptionsElement: React.FC<VoteStateType> = ({ setVotes, votes }) => {
+const VoteOptionsElement: React.FC<VoteStateType> = ({ setVoteOptions, voteOptions }) => {
   const addingVoteOption = (value: string) => {
-    setVotes([...votes, value])
+    setVoteOptions([...voteOptions, value])
   };
 
+  //function para confirmacao da adicao de opcoes de voto.
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && event.target instanceof HTMLInputElement) {
       event.preventDefault();
@@ -12,10 +13,10 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({ setVotes, votes }) => {
     }
   };
   return (
-    <div>
+    <div className=" flex gap-5 items-center">
       <label htmlFor="vOption">Vote Options</label>
       <input
-        className=" bg-black border border-white"
+        className=" p-5 bg-black border border-white"
         type="text"
         id="vOption"
         name="vOption"

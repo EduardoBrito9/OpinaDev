@@ -1,23 +1,45 @@
 import { useState } from "react";
 import VoteOptionsCreate from "./VoteOptionsCreate";
+import { supabase } from "../lib/helper/supabaseClient";
+import { useMyContext } from "../context/functionContext";
+import { VoteSectionType } from "../types/propsTypes/typesProps";
 
-const CreatePost = () => {
+const CreatePost: React.FC<VoteSectionType> = ({
+  voteSection,
+  setVoteSection,
+}) => {
+  const { user } = useMyContext();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [votes, setVotes] = useState<string[]>([]);
+  const [voteOptions, setVoteOptions] = useState<string[]>([]);
+  const [endDate, setEndDate] = useState("");
 
-  const postVerification = (event: React.FormEvent<HTMLFormElement>) => {
+  //function para adicionar post de voto
+  const postVerification = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(title, description, votes);
+    const postV = await supabase
+      .from("OpinaDev")
+      .insert({
+        created_by: user.id,
+        title,
+        description,
+        endDate,
+        voteOptions,
+        user_name: user.user_metadata.user_name,
+      })
+      .select("*")
+      .single();
+    setVoteSection([...voteSection, postV.data]);
   };
+
   return (
     <form
-      className=" flex  flex-col gap-5 text-white"
+      className=" flex  flex-col  gap-5 text-white"
       onSubmit={postVerification}
     >
       <label htmlFor="Title">Title</label>
       <input
-        className="bg-black border border-white"
+        className="bg-black border p-5 border-white"
         onChange={({ target }) => {
           setTitle(target.value);
         }}
@@ -28,7 +50,7 @@ const CreatePost = () => {
       />
       <label htmlFor="Description">Description</label>
       <input
-        className="bg-black border border-white"
+        className="bg-black border p-5 border-white"
         onChange={({ target }) => {
           setDescription(target.value);
         }}
@@ -37,13 +59,20 @@ const CreatePost = () => {
         id="Description"
         name="Description"
       />
-      <VoteOptionsCreate setVotes={setVotes} votes={votes} />
-      <label htmlFor="">End Date</label>
+      <VoteOptionsCreate
+        setVoteOptions={setVoteOptions}
+        voteOptions={voteOptions}
+      />
+      <label htmlFor="date">End Date</label>
       <input
-        className="bg-black border border-white"
+        className="bg-black border p-5 border-white"
         type="date"
-        name=""
-        id=""
+        name="date"
+        id="date"
+        value={endDate}
+        onChange={({ target }) => {
+          setEndDate(target.value);
+        }}
       />
       <button>just a test</button>
     </form>
