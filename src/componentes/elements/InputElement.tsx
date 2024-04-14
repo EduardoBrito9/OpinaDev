@@ -6,7 +6,7 @@ const Input: React.FC<InputType> = ({ type, onChange, id, name, value, placehold
     <>
       <label htmlFor={id} className=" text-sm">{name}</label>
       <input
-        className="bg-black py-3 px-4 border border-modalColor rounded text-sm outline-none focus:border-orange-500 focus:border-opacity-50"
+        className="bg-black py-3 px-4 border border-modalColor rounded text-sm text-#DEDCE4 outline-none focus:border-orange-500 focus:border-opacity-50"
         placeholder={placeholder}
         type={type}
         onChange={onChange}
