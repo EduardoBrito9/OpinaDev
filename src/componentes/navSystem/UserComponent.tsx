@@ -1,13 +1,14 @@
-import { validatingPhoto } from "../validateFunctions/validateDataType";
-import { PropType } from "../types/propsTypes/typesProps";
+import { validatingPhoto } from "../../validateFunctions/validateDataType";
+import { PropType } from "../../types/propsTypes/typesProps";
 import Modal from "./Modal";
+import useMyContext from "../../context/functionContext";
 
 const UserComponent: React.FC<PropType> = ({
   modalRef,
   miniModal,
-  user,
   setMiniModal,
 }) => {
+  const { user } = useMyContext();
   const handleModal = () => {
     setMiniModal(!miniModal);
   };

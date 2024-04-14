@@ -1,11 +1,9 @@
 import { ReactNode } from "react";
-import { UserIN } from "../userTypes/User";
 
 export interface PropType {
   modalRef: React.MutableRefObject<HTMLDivElement | null>;
   miniModal: boolean;
   setMiniModal: (miniModal: boolean) => void;
-  user?: UserIN;
 }
 //interface para propriedades do elemento button
 export interface ButtonType {
@@ -23,12 +21,14 @@ export interface InputType {
   id: string;
   name: string;
   value: string;
+  placeholder: string;
 }
 
 //vote types
 export interface VoteStateType {
   voteOptions: string[];
   setVoteOptions: (voteOptions: string[]) => void;
+  placeholder: string;
 }
 export interface VoteTypeStructure {
   created_at: string;

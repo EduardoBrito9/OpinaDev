@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { MyContext } from "./Context";
-//funcao que uso de ponte para ter acesso ao meu context de forma segura
-export const useMyContext = () => {
+
+// Função que uso de ponte para ter acesso ao meu contexto de forma segura
+export default function useMyContext() {
   const context = useContext(MyContext);
   if (!context) {
     throw new Error(
@@ -9,5 +10,4 @@ export const useMyContext = () => {
     );
   }
   return context;
-};
-
+}

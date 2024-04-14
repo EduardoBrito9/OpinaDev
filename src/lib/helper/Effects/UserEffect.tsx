@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { supabase } from "../supabaseClient";
 import { UserIN } from "../../../types/userTypes/User";
-import { useMyContext } from "../../../context/functionContext";
+import  useMyContext  from "../../../context/functionContext";
 import { validateSession } from "../../../validateFunctions/validateDataType";
 
 export const UserEffect = () => {

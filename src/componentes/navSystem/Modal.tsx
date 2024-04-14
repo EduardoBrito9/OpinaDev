@@ -1,9 +1,9 @@
-import { logout } from "../lib/helper/funcLogin/authUser.service";
+import { logout } from "../../lib/helper/funcLogin/authUser.service";
 import { CiSettings } from "react-icons/ci";
 import { FiPlus } from "react-icons/fi";
 import { GiPadlockOpen } from "react-icons/gi";
-import ButtonProfileOptions from "./elements/ButtonProfileOptions";
-import ButtonLogout from "./elements/ButtonLogout";
+import ButtonProfileOptions from "../elements/ButtonProfileOptions";
+import ButtonLogout from "../elements/ButtonLogout";
 
 const Modal = () => {
   const handleLogout = async () => {

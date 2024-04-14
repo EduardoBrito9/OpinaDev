@@ -1,10 +1,10 @@
 import React from "react";
-import { useMyContext } from "../context/functionContext";
-import { login } from "../lib/helper/funcLogin/authUser.service";
+import useMyContext from "../../context/functionContext";
+import { login } from "../../lib/helper/funcLogin/authUser.service";
 import { FaGithub } from "react-icons/fa";
 import UserComponent from "./UserComponent";
-import { PropType } from "../types/propsTypes/typesProps";
-import { UserEffect } from "../lib/helper/Effects/UserEffect";
+import { PropType } from "../../types/propsTypes/typesProps";
+import { UserEffect } from "../../lib/helper/Effects/UserEffect";
 
 const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
   const { user } = useMyContext();
@@ -47,9 +47,8 @@ const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
         user.aud === "authenticated" ? (
           <UserComponent
             modalRef={modalRef}
-            setMiniModal={setMiniModal}
             miniModal={miniModal}
-            user={user}
+            setMiniModal={setMiniModal}
           />
         ) : (
           <button

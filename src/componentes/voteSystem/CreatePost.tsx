@@ -1,9 +1,9 @@
 import { useState } from "react";
-import VoteOptionsCreate from "./VoteOptionsCreate";
-import { supabase } from "../lib/helper/supabaseClient";
-import { useMyContext } from "../context/functionContext";
-import { VoteSectionType } from "../types/propsTypes/typesProps";
-import InputElement from "./elements/InputElement";
+import VoteOptionsCreate from "./CreateVoteOptions";
+import { supabase } from "../../lib/helper/supabaseClient";
+import useMyContext from "../../context/functionContext";
+import { VoteSectionType } from "../../types/propsTypes/typesProps";
+import InputElement from "../elements/InputElement";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -42,6 +42,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         onChange={({ target }) => {
           setTitle(target.value);
         }}
+        placeholder="vote em qual voce acha melhor..."
         type="text"
         value={title}
         id="Title"
@@ -51,6 +52,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         onChange={({ target }) => {
           setDescription(target.value);
         }}
+        placeholder="(opcional) descricao da votacao"
         value={description}
         type="text"
         id="Description"
@@ -58,11 +60,13 @@ const CreatePost: React.FC<VoteSectionType> = ({
       />
 
       <VoteOptionsCreate
+        placeholder="Pressione enter para adicionar opcoes"
         setVoteOptions={setVoteOptions}
         voteOptions={voteOptions}
       />
 
       <InputElement
+        placeholder="Escolha uma data"
         type="date"
         name="date"
         id="date"

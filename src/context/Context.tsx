@@ -45,7 +45,7 @@ export const MyContextProvider = ({ children }: Props) => {
   });
 
   return (
-    <MyContext.Provider value={{ user, setUser }}>
+    <MyContext.Provider value={{ user, setUser}}>
       {children}
     </MyContext.Provider>
   );
