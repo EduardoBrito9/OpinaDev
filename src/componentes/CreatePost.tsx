@@ -3,6 +3,7 @@ import VoteOptionsCreate from "./VoteOptionsCreate";
 import { supabase } from "../lib/helper/supabaseClient";
 import { useMyContext } from "../context/functionContext";
 import { VoteSectionType } from "../types/propsTypes/typesProps";
+import InputElement from "./elements/InputElement";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -37,20 +38,16 @@ const CreatePost: React.FC<VoteSectionType> = ({
       className=" flex  flex-col  gap-5 text-white"
       onSubmit={postVerification}
     >
-      <label htmlFor="Title">Title</label>
-      <input
-        className="bg-black border p-5 border-white"
+      <InputElement
         onChange={({ target }) => {
           setTitle(target.value);
         }}
-        value={title}
         type="text"
+        value={title}
         id="Title"
         name="Title"
       />
-      <label htmlFor="Description">Description</label>
-      <input
-        className="bg-black border p-5 border-white"
+      <InputElement
         onChange={({ target }) => {
           setDescription(target.value);
         }}
@@ -59,13 +56,13 @@ const CreatePost: React.FC<VoteSectionType> = ({
         id="Description"
         name="Description"
       />
+
       <VoteOptionsCreate
         setVoteOptions={setVoteOptions}
         voteOptions={voteOptions}
       />
-      <label htmlFor="date">End Date</label>
-      <input
-        className="bg-black border p-5 border-white"
+
+      <InputElement
         type="date"
         name="date"
         id="date"
@@ -74,6 +71,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           setEndDate(target.value);
         }}
       />
+
       <button>just a test</button>
     </form>
   );

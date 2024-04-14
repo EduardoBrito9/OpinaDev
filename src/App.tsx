@@ -5,6 +5,7 @@ import { MyContextProvider } from "./context/Context";
 import { useEffect, useRef, useState } from "react";
 import CreatePost from "./componentes/CreatePost";
 import { VoteTypeStructure } from "./types/voteTypes/voteType";
+import HomePage from "./componentes/HomePage";
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([])
@@ -47,8 +48,9 @@ function App() {
             miniModal={miniModal}
             setMiniModal={setMiniModal}
           />
-          {/* <Route path="/" element={<Home />} /> */}
+    
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/CreatePost" element={<CreatePost voteSection={voteSection} setVoteSection={setVoteSection}/>} />
           </Routes>
         </main>
