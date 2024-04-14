@@ -44,25 +44,29 @@ function App() {
   return (
     <MyContextProvider>
       <BrowserRouter>
-        <main className=" flex flex-col max-w-7xl mx-auto min-h-screen space-y-10 p-5">
-          <Nav
-            modalRef={modalRef}
-            miniModal={miniModal}
-            setMiniModal={setMiniModal}
-          />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/Profile" element={<ProfilePage />} />
-            <Route
-              path="/CreatePost"
-              element={
-                <CreatePost
-                  voteSection={voteSection}
-                  setVoteSection={setVoteSection}
-                />
-              }
+        <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-20 p-5 ">
+          <div className=" w-full flex-1 space-y-12">
+            <Nav
+              modalRef={modalRef}
+              miniModal={miniModal}
+              setMiniModal={setMiniModal}
             />
-          </Routes>
+            <div className=" max-w-5xl mx-auto">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/Profile" element={<ProfilePage />} />
+                <Route
+                  path="/CreatePost"
+                  element={
+                    <CreatePost
+                      voteSection={voteSection}
+                      setVoteSection={setVoteSection}
+                    />
+                  }
+                />
+              </Routes>
+            </div>
+          </div>
         </main>
       </BrowserRouter>
     </MyContextProvider>

@@ -35,7 +35,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
 
   return (
     <form
-      className=" flex  flex-col  gap-5 text-white"
+      className=" flex  flex-col  gap-7 text-white max-w-[1000px]" 
       onSubmit={postVerification}
     >
       <InputElement
@@ -45,8 +45,8 @@ const CreatePost: React.FC<VoteSectionType> = ({
         placeholder="vote em qual voce acha melhor..."
         type="text"
         value={title}
-        id="Title"
-        name="Title"
+        id="Titulo"
+        name="Titulo"
       />
       <InputElement
         onChange={({ target }) => {
@@ -55,8 +55,8 @@ const CreatePost: React.FC<VoteSectionType> = ({
         placeholder="(opcional) descricao da votacao"
         value={description}
         type="text"
-        id="Description"
-        name="Description"
+        id="Descricao"
+        name="Descricao"
       />
 
       <VoteOptionsCreate
@@ -68,15 +68,15 @@ const CreatePost: React.FC<VoteSectionType> = ({
       <InputElement
         placeholder="Escolha uma data"
         type="date"
-        name="date"
-        id="date"
+        name="Data Final"
+        id="Data Final"
         value={endDate}
         onChange={({ target }) => {
           setEndDate(target.value);
         }}
       />
 
-      <button>just a test</button>
+      <button className="bg-orange-500 py-2 rounded">just a test</button>
     </form>
   );
 };

@@ -5,6 +5,7 @@ import { FaGithub } from "react-icons/fa";
 import UserComponent from "./UserComponent";
 import { PropType } from "../../types/propsTypes/typesProps";
 import { UserEffect } from "../../lib/helper/Effects/UserEffect";
+import { Link } from "react-router-dom";
 
 const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
   const { user } = useMyContext();
@@ -23,7 +24,7 @@ const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
   return (
     <div>
       <div className="flex justify-between h-[38px] items-center">
-        <h1 className="text-3xl font-bold flex gap-2 items-center">
+        <Link to='/'><h1 className="text-3xl font-bold flex gap-2 items-center">
           DevOpina{" "}
           <svg
             width="15"
@@ -40,7 +41,8 @@ const Nav: React.FC<PropType> = ({ modalRef, miniModal, setMiniModal }) => {
               clipRule="evenodd"
             ></path>
           </svg>
-        </h1>
+        </h1></Link>
+        
         {user &&
         "user_metadata" in user &&
         "aud" in user &&

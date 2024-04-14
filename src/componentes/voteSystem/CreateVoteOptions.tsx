@@ -19,7 +19,7 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
   };
   return (
     <div className=" flex flex-col gap-5 ">
-      <label htmlFor="vOption">Vote Options</label>
+      <label htmlFor="vOption" className=" text-sm">Opcoes de voto</label>
       <input
         className=" p-5 bg-black border border-white"
         placeholder={placeholder}
