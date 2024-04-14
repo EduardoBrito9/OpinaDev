@@ -8,6 +8,8 @@ import CreatePost from "./componentes/voteSystem/CreatePost";
 import HomePage from "./componentes/HomePage";
 import { VoteTypeStructure } from "./types/propsTypes/typesProps";
 import ProfilePage from "./componentes/ProfilePage";
+import { validateDataPostType } from "./validateFunctions/validateDataType";
+import { supabase } from "./lib/helper/supabaseClient";
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
@@ -41,6 +43,19 @@ function App() {
     };
   }, [miniModal]);
 
+  const getPost = async () => {
+    const res = await supabase.from("OpinaDev").select("*");
+    if (validateDataPostType(res.data)) {
+      setVoteSection(res.data);
+    } else {
+      console.log("error");
+    }
+  };
+
+  useEffect(() => {
+    getPost();
+  }, []);
+
   return (
     <MyContextProvider>
       <BrowserRouter>
@@ -53,7 +68,15 @@ function App() {
             />
             <div className=" max-w-5xl mx-auto">
               <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route
+                  path="/"
+                  element={
+                    <HomePage
+                      voteSection={voteSection}
+                      setVoteSection={setVoteSection}
+                    />
+                  }
+                />
                 <Route path="/Profile" element={<ProfilePage />} />
                 <Route
                   path="/CreatePost"

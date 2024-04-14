@@ -1,3 +1,4 @@
+import { VoteSectionType } from "../types/propsTypes/typesProps";
 import { UserIN } from "../types/userTypes/User";
 import { UserMetadataIN } from "../types/userTypes/userMetaData";
 
@@ -13,6 +14,18 @@ export const validatingPhoto = (value: unknown): value is UserMetadataIN => {
 //funcao para validar o user e conseguir acessar as propriedades
 export const validateSession = (value: unknown): value is UserIN => {
   if (value && typeof value === "object" && "user" in value) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+//funcao para validar o tipo de data que estou puxando para os posts
+
+export const validateDataPostType = (
+  value: unknown,
+): value is VoteSectionType => {
+  if (Array.isArray(value) && value.every((item) => "id" in item)) {
     return true;
   } else {
     return false;

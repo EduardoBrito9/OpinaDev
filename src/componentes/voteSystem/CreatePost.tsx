@@ -4,6 +4,9 @@ import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
 import { VoteSectionType } from "../../types/propsTypes/typesProps";
 import InputElement from "../elements/InputElement";
+// import VoteDataEffect from "../../lib/helper/Effects/VoteDataEffect";
+import AlertPostLoading from "../loadingSystem/AlertPostLoading";
+import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -14,30 +17,53 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [description, setDescription] = useState("");
   const [voteOptions, setVoteOptions] = useState<string[]>([]);
   const [endDate, setEndDate] = useState("");
+  // const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  // VoteDataEffect({ title, description, voteOptions, endDate });
 
   //function para adicionar post de voto
   const postVerification = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const postV = await supabase
-      .from("OpinaDev")
-      .insert({
-        created_by: user.id,
-        title,
-        description,
-        endDate,
-        voteOptions,
-        user_name: user.user_metadata.user_name,
-      })
-      .select("*")
-      .single();
-    setVoteSection([...voteSection, postV.data]);
+    setIsLoading(true);
+    try {
+      const postV = await supabase
+        .from("OpinaDev")
+        .insert({
+          created_by: user.id,
+          title,
+          description,
+          endDate,
+          voteOptions,
+          user_name: user.user_metadata.user_name,
+        })
+        .select("*")
+        .single();
+      setVoteSection([...voteSection, postV.data]);
+      setIsSuccess(true);
+    } catch (error) {
+      console.log("ocorreu um erro", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <form
-      className=" flex  flex-col  gap-7 text-white max-w-[1000px]" 
+      className=" flex  flex-col  gap-7 text-white max-w-[1000px] relative"
       onSubmit={postVerification}
     >
+      {isLoading && (
+        <div>
+          <AlertPostLoading />
+        </div>
+      )}
+      {isSuccess && (
+        <div>
+          <AlertPostSucess />
+        </div>
+      )}
       <InputElement
         onChange={({ target }) => {
           setTitle(target.value);
@@ -76,7 +102,13 @@ const CreatePost: React.FC<VoteSectionType> = ({
         }}
       />
 
-      <button className="bg-orange-500 py-2 rounded">just a test</button>
+      <button
+        // onClick={postVerification}
+        // disabled={isDisabled}
+        className=" bg-orange-600 py-2 rounded `"
+      >
+        just a test
+      </button>
     </form>
   );
 };

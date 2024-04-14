@@ -44,3 +44,11 @@ export interface VoteSectionType {
   voteSection: VoteTypeStructure[];
   setVoteSection: (voteSection: VoteTypeStructure[]) => void;
 }
+
+export interface VoteDataType {
+  title: string;
+  description: string;
+  voteOptions: string[];
+  endDate: string;
+  setIsDisabled: (isDisabled: boolean) => void;
+}
