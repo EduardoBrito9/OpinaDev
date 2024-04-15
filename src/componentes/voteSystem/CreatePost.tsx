@@ -56,6 +56,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
   };
 
   return (
+    <div className=" max-w-5xl mx-auto">
     <form
       className=" flex  flex-col  gap-7 text-white max-w-[1000px] relative"
       onSubmit={postVerification}
@@ -117,6 +118,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         just a test
       </button>
     </form>
+    </div>
   );
 };
 

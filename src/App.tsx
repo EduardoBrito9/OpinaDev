@@ -45,7 +45,7 @@ function App() {
 
   const getPost = async () => {
     const res = await supabase.from("OpinaDev").select("*");
-    console.log(res)
+    console.log(res);
     if (validateDataPostType(res.data)) {
       setVoteSection(res.data);
     } else {
@@ -67,29 +67,28 @@ function App() {
               miniModal={miniModal}
               setMiniModal={setMiniModal}
             />
-            <div className=" max-w-5xl mx-auto">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <HomePage
-                      voteSection={voteSection}
-                      setVoteSection={setVoteSection}
-                    />
-                  }
-                />
-                <Route path="/Profile" element={<ProfilePage />} />
-                <Route
-                  path="/CreatePost"
-                  element={
-                    <CreatePost
-                      voteSection={voteSection}
-                      setVoteSection={setVoteSection}
-                    />
-                  }
-                />
-              </Routes>
-            </div>
+
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomePage
+                    voteSection={voteSection}
+                    setVoteSection={setVoteSection}
+                  />
+                }
+              />
+              <Route path="/Profile" element={<ProfilePage />} />
+              <Route
+                path="/CreatePost"
+                element={
+                  <CreatePost
+                    voteSection={voteSection}
+                    setVoteSection={setVoteSection}
+                  />
+                }
+              />
+            </Routes>
           </div>
         </main>
       </BrowserRouter>

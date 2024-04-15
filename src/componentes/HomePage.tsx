@@ -8,9 +8,9 @@ const HomePage: React.FC<VoteSectionType> = ({
    console.log(setVoteSection);
 
   return (
-    <section className="space-y-10 text-green-500 ">
-      <h1 className="font-bold text-3xl">Votos Ativos 📣</h1>
-      <div className=" grid grid-cols-3 gap-16">
+    <section className="space-y-9 text-green-500 ">
+      <h1 className="font-bold text-2xl">Votos Ativos 📣</h1>
+      <div className=" grid grid-cols-3 gap-16 p-5">
         {voteSection &&
           voteSection.map((item) => (
             <div
