@@ -17,7 +17,7 @@ export interface ButtonType {
 
 export interface InputType {
   type: string;
-  onChange: ({ target }: { target: HTMLInputElement }) => void;
+  onChange?: ({ target }: { target: HTMLInputElement }) => void;
   id: string;
   name: string;
   value: string;

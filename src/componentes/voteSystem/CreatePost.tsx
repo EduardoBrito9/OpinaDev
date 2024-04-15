@@ -7,6 +7,7 @@ import InputElement from "../elements/InputElement";
 // import VoteDataEffect from "../../lib/helper/Effects/VoteDataEffect";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
+import Calendar from "react-calendar";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -16,10 +17,14 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [voteOptions, setVoteOptions] = useState<string[]>([]);
-  const [endDate, setEndDate] = useState("");
   // const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  type ValuePiece = Date | null;
+
+  type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+  const [value, onChange] = useState<Value>(new Date());
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
 
@@ -34,7 +39,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           created_by: user.id,
           title,
           description,
-          endDate,
+          endDate: value,
           voteOptions,
           user_name: user.user_metadata.user_name,
         })
@@ -93,14 +98,12 @@ const CreatePost: React.FC<VoteSectionType> = ({
 
       <InputElement
         placeholder="Escolha uma data"
-        type="date"
+        type="text"
         name="Data Final"
         id="Data Final"
-        value={endDate}
-        onChange={({ target }) => {
-          setEndDate(target.value);
-        }}
+        value={`${value?.toString().substring(0, 15)}`}
       />
+      <Calendar className="w-[300px]" onChange={onChange} value={value} />
 
       <button
         // onClick={postVerification}
