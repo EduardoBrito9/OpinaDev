@@ -42,6 +42,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           endDate: value,
           voteOptions,
           user_name: user.user_metadata.user_name,
+          url: user.user_metadata.avatar_url,
         })
         .select("*")
         .single();
@@ -101,6 +102,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
         type="text"
         name="Data Final"
         id="Data Final"
+        onChange={(()=>{
+          console.log('nothing')
+        })}
         value={`${value?.toString().substring(0, 15)}`}
       />
       <Calendar className="w-[300px]" onChange={onChange} value={value} />

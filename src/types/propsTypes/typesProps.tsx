@@ -39,6 +39,7 @@ export interface VoteTypeStructure {
   title: string;
   user_name: string;
   voteOptions: string[];
+  url:string;
 }
 export interface VoteSectionType {
   voteSection: VoteTypeStructure[];

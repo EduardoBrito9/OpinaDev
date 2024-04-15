@@ -1,4 +1,3 @@
-import useMyContext from "../context/functionContext";
 import { formatarData } from "../lib/helper/dataConversion/funcData";
 import { VoteSectionType } from "../types/propsTypes/typesProps";
 
@@ -6,8 +5,8 @@ const HomePage: React.FC<VoteSectionType> = ({
   voteSection,
   setVoteSection,
 }) => {
-  console.log(setVoteSection);
-  const { user } = useMyContext();
+   console.log(setVoteSection);
+
   return (
     <section className="space-y-10 text-green-500 ">
       <h1 className="font-bold text-3xl">Votos Ativos 📣</h1>
@@ -21,7 +20,7 @@ const HomePage: React.FC<VoteSectionType> = ({
               <h1 className=" flex items-center gap-2 text-stone-200">
                 {" "}
                 <button className=" rounded-full border-2 border-indigo-600 h-11 w-11 overflow-hidden">
-                  <img src={user.user_metadata.avatar_url} alt="" />
+                  <img src={item.url} alt="" />
                 </button>
                 {item.user_name}
               </h1>

@@ -45,6 +45,7 @@ function App() {
 
   const getPost = async () => {
     const res = await supabase.from("OpinaDev").select("*");
+    console.log(res)
     if (validateDataPostType(res.data)) {
       setVoteSection(res.data);
     } else {
