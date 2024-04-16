@@ -1,3 +1,4 @@
+// import { supabase } from "../../lib/helper/supabaseClient";
 import { VoteStateType } from "../../types/propsTypes/typesProps";
 
 const VoteOptionsElement: React.FC<VoteStateType> = ({
@@ -6,7 +7,7 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
   placeholder,
 }) => {
   //funcao para verificar e adicionar opcoes de votos
-  const addingVoteOption = (value: string) => {
+  const addingVoteOption = async (value: string) => {
     if (!voteOptions.includes(value)) {
       setVoteOptions([...voteOptions, value]);
     }
@@ -14,7 +15,7 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
 
   //funcao para deletar opcao de voto
   const deleteOption = (item: string) => {
-    console.log(item)
+    console.log(item);
     const index = voteOptions.indexOf(item);
     const newOptions = [...voteOptions];
     newOptions.splice(index, 1);

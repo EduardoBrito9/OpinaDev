@@ -10,6 +10,7 @@ import { VoteTypeStructure } from "./types/propsTypes/typesProps";
 import ProfilePage from "./componentes/ProfilePage";
 import { validateDataPostType } from "./validateFunctions/validateDataType";
 import { supabase } from "./lib/helper/supabaseClient";
+import VotePage from "./componentes/voteSystem/VotePage";
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
@@ -44,10 +45,9 @@ function App() {
   }, [miniModal]);
 
   const getPost = async () => {
-    const res = await supabase.from("OpinaDev").select("*");
-    console.log(res);
-    if (validateDataPostType(res.data)) {
-      setVoteSection(res.data);
+    const { data } = await supabase.from("OpinaDev").select("*");
+    if (validateDataPostType(data)) {
+      setVoteSection(data);
     } else {
       console.log("error");
     }
@@ -88,6 +88,7 @@ function App() {
                   />
                 }
               />
+              <Route path="/vote/:id" element={<VotePage />} />
             </Routes>
           </div>
         </main>
