@@ -5,6 +5,7 @@ import { validateDataPostType } from "../../validateFunctions/validateDataType";
 import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
 
 const VotePage = () => {
+  // const [voteQuant, setVoteQuant] = useState<number[]>([]);
   const { id } = useParams();
   const [votePost, setVotePost] = useState<VoteTypeStructure>(
     {} as VoteTypeStructure,
@@ -24,12 +25,32 @@ const VotePage = () => {
     getVotePost();
   }, [getVotePost]);
 
+  const voteCount = async (index: number) => {
+    const columnName = "option" + index;
+    console.log(columnName)
+    const postOp = await supabase
+      .from("votesTable")
+      .update({ option1: 5 })
+      .eq("post_id", id);
+    console.log(postOp);
+  };
+
   return (
     <div className=" space-y-20">
       <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1>
       <div>
         {Array.isArray(votePost.voteOptions) &&
-          votePost.voteOptions.map((item) => <div className=" text-2xl" key={item}>{item}</div>)}
+          votePost.voteOptions.map((item, index) => (
+            <div
+              onClick={() => {
+                voteCount(index);
+              }}
+              className=" text-2xl hover: cursor-pointer"
+              key={item}
+            >
+              {item}
+            </div>
+          ))}
       </div>
     </div>
   );

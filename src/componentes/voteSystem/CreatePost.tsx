@@ -27,7 +27,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [value, onChange] = useState<Value>(new Date());
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
-  
+
   //function para adicionar post de voto
   const postVerification = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,12 +44,19 @@ const CreatePost: React.FC<VoteSectionType> = ({
           user_name: user.user_metadata.user_name,
           url: user.user_metadata.avatar_url,
         })
-        .select("*")
+        .select(
+          `*, votesTable (
+          *
+        )`,
+        )
         .single();
-      console.log(postV);
+      const postOp = await supabase
+        .from("votesTable")
+        .insert({ post_id: postV.data.id, option1: 0, option2: 0 });
+      console.log(postOp);
+
+      console.log(postOp);
       setVoteSection([...voteSection, postV.data]);
-      // const voteTable = await supabase.from('votesTable').insert({option1: voteOptions[0]})
-      // console.log(voteTable)
       setIsSuccess(true);
     } catch (error) {
       console.log("ocorreu um erro", error);
