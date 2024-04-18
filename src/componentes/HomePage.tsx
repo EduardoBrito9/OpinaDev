@@ -6,7 +6,7 @@ const HomePage: React.FC<VoteSectionType> = ({
   voteSection,
   setVoteSection,
 }) => {
-  console.log(setVoteSection);
+  // console.log(setVoteSection);
 
   return (
     <section className="space-y-9 text-green-500 ">

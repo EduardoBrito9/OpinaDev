@@ -27,7 +27,7 @@ const VotePage = () => {
 
   const voteCount = async (index: number) => {
     const columnName = "option" + index;
-    console.log(columnName)
+    console.log(columnName);
     const postOp = await supabase
       .from("votesTable")
       .update({ option1: 5 })
