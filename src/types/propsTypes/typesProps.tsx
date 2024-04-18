@@ -39,7 +39,7 @@ export interface VoteTypeStructure {
   title: string;
   user_name: string;
   voteOptions: string[];
-  url:string;
+  url: string;
 }
 export interface VoteSectionType {
   voteSection: VoteTypeStructure[];
@@ -52,4 +52,13 @@ export interface VoteDataType {
   voteOptions: string[];
   endDate: string;
   setIsDisabled: (isDisabled: boolean) => void;
+}
+
+export interface VoteTableType {
+  created_at: string;
+  id: number;
+  option1: number;
+  option2: number;
+  post_id: string;
+  users_already_voted: string[];
 }

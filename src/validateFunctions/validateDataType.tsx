@@ -1,4 +1,4 @@
-import { VoteSectionType } from "../types/propsTypes/typesProps";
+import { VoteSectionType, VoteTableType } from "../types/propsTypes/typesProps";
 import { UserIN } from "../types/userTypes/User";
 import { UserMetadataIN } from "../types/userTypes/userMetaData";
 
@@ -26,6 +26,18 @@ export const validateDataPostType = (
   value: unknown,
 ): value is VoteSectionType => {
   if (Array.isArray(value) && value.every((item) => "id" in item)) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+// funcao para validar o tipo de data para voteTable (se a tabela de votos dentro do post eh valida)
+
+export const validateDataVoteTableType = (
+  value: unknown,
+): value is VoteTableType => {
+  if (value && typeof value === "object" && "users_already_voted" in value) {
     return true;
   } else {
     return false;

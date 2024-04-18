@@ -8,6 +8,7 @@ import InputElement from "../elements/InputElement";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 import Calendar from "react-calendar";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -20,10 +21,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
   // const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const navigate = useNavigate();
   type ValuePiece = Date | null;
-
   type Value = ValuePiece | [ValuePiece, ValuePiece];
-
   const [value, onChange] = useState<Value>(new Date());
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
@@ -54,10 +54,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
         .from("votesTable")
         .insert({ post_id: postV.data.id, option1: 0, option2: 0 });
       console.log(postOp);
-
-      console.log(postOp);
       setVoteSection([...voteSection, postV.data]);
       setIsSuccess(true);
+      navigate(`/vote/${postV.data.id}`)
     } catch (error) {
       console.log("ocorreu um erro", error);
     } finally {

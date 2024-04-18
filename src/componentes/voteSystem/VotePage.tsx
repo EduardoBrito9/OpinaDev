@@ -1,15 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../lib/helper/supabaseClient";
-import { validateDataPostType } from "../../validateFunctions/validateDataType";
+import {
+  validateDataPostType,
+  validateDataVoteTableType,
+} from "../../validateFunctions/validateDataType";
 import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
+import useMyContext from "../../context/functionContext";
 
 const VotePage = () => {
   // const [voteQuant, setVoteQuant] = useState<number[]>([]);
+  const { user } = useMyContext();
   const { id } = useParams();
   const [votePost, setVotePost] = useState<VoteTypeStructure>(
     {} as VoteTypeStructure,
   );
+  const [voteTable, setVoteTable] = useState<string[]>([""]);
 
   const getVotePost = useCallback(async () => {
     const { data } = await supabase.from("OpinaDev").select().eq("id", `${id}`);
@@ -25,14 +31,36 @@ const VotePage = () => {
     getVotePost();
   }, [getVotePost]);
 
-  const voteCount = async (index: number) => {
-    const columnName = "option" + index;
-    console.log(columnName);
-    const postOp = await supabase
+  const getVoteTable = useCallback(async () => {
+    const { data } = await supabase
       .from("votesTable")
-      .update({ option1: 5 })
+      .select("*")
       .eq("post_id", id);
-    console.log(postOp);
+    if (data && validateDataVoteTableType(data[0])) {
+      setVoteTable(data[0].users_already_voted);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    getVoteTable();
+  }, [getVoteTable]);
+
+  const voteCount = async () => {
+    // const columnName = "option" + index;
+    // console.log(columnName);
+    if (!voteTable.includes(user.id)) {
+      console.log(voteTable);
+      voteTable.push(user.id);
+      await supabase
+        .from("votesTable")
+        .update({
+          option1: 5,
+          users_already_voted: voteTable,
+        })
+        .eq("post_id", id);
+    } else {
+      console.log("you already");
+    }
   };
 
   return (
@@ -40,10 +68,10 @@ const VotePage = () => {
       <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1>
       <div>
         {Array.isArray(votePost.voteOptions) &&
-          votePost.voteOptions.map((item, index) => (
+          votePost.voteOptions.map((item) => (
             <div
               onClick={() => {
-                voteCount(index);
+                voteCount();
               }}
               className=" text-2xl hover: cursor-pointer"
               key={item}
