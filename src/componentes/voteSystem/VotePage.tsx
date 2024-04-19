@@ -4,8 +4,10 @@ import { supabase } from "../../lib/helper/supabaseClient";
 import {
   validateDataPostType,
   validateDataVoteTableType,
+  validateVoteOptionUser,
 } from "../../validateFunctions/validateDataType";
 import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
+// import { UpdateVote } from "../../types/propsTypes/typesProps";
 import useMyContext from "../../context/functionContext";
 
 const VotePage = () => {
@@ -16,6 +18,7 @@ const VotePage = () => {
     {} as VoteTypeStructure,
   );
   const [voteTable, setVoteTable] = useState<string[]>([""]);
+  const [tableNumber, setTableNumber] = useState({});
 
   const getVotePost = useCallback(async () => {
     const { data } = await supabase.from("OpinaDev").select().eq("id", `${id}`);
@@ -36,8 +39,9 @@ const VotePage = () => {
       .from("votesTable")
       .select("*")
       .eq("post_id", id);
-    if (data && validateDataVoteTableType(data[0])) {
+    if (data && data[0] && validateDataVoteTableType(data[0])) {
       setVoteTable(data[0].users_already_voted);
+      setTableNumber(data[0]);
     }
   }, [id]);
 
@@ -45,38 +49,39 @@ const VotePage = () => {
     getVoteTable();
   }, [getVoteTable]);
 
-  const voteCount = async () => {
-    // const columnName = "option" + index;
-    // console.log(columnName);
-    if (!voteTable.includes(user.id)) {
-      console.log(voteTable);
+  const voteCount = async (index: number) => {
+    type UpdateData = {
+      [key: string]: number | string[];
+    };
+    const columnName = "option" + index;
+    if (
+      validateVoteOptionUser(tableNumber, columnName) &&
+      !voteTable.includes(user.id)
+    ) {
       voteTable.push(user.id);
-      await supabase
-        .from("votesTable")
-        .update({
-          option1: 5,
-          users_already_voted: voteTable,
-        })
-        .eq("post_id", id);
+      const updateObj: UpdateData = {};
+      updateObj[columnName] = tableNumber[columnName]++;
+      updateObj["users_already_voted"] = voteTable;
+      await supabase.from("votesTable").update(updateObj).eq("post_id", id);
     } else {
       console.log("you already");
     }
   };
-
   return (
     <div className=" space-y-20">
       <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1>
       <div>
         {Array.isArray(votePost.voteOptions) &&
-          votePost.voteOptions.map((item) => (
+          votePost.voteOptions.map((item, index) => (
             <div
               onClick={() => {
-                voteCount();
+                voteCount(index + 1);
               }}
               className=" text-2xl hover: cursor-pointer"
               key={item}
             >
               {item}
+              <div></div>
             </div>
           ))}
       </div>

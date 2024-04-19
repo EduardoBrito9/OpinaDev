@@ -62,3 +62,9 @@ export interface VoteTableType {
   post_id: string;
   users_already_voted: string[];
 }
+
+export interface UpdateVote {
+  [key: string]: number 
+  columnName: number;
+  users_already_voted: string[];
+}
