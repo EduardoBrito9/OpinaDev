@@ -55,14 +55,14 @@ const VotePage = () => {
     const columnName = "option" + index;
     if (
       validateVoteOptionUser(tableNumber, columnName) &&
-      voteTable.includes(user.id)
+      !voteTable.includes(user.id)
     ) {
       voteTable.push(user.id);
       const updateObj: UpdateData = {};
       updateObj[columnName] = tableNumber[columnName] += 1;
       updateObj["users_already_voted"] = voteTable;
       await supabase.from("votesTable").update(updateObj).eq("post_id", id);
-      getVoteTable()
+      getVoteTable();
     } else {
       console.log("you already");
     }
@@ -77,15 +77,16 @@ const VotePage = () => {
               onClick={() => {
                 voteCount(index + 1);
               }}
-              className=" text-2xl hover: cursor-pointer"
+              className=" text-2xl hover: cursor-pointer flex gap-10"
               key={item}
             >
-              {item}
+              <div className=" w-[250px]">{item}</div>
+
               {validateVoteOptionUser(tableNumber, "option" + (index + 1)) && (
                 <div className="text-white">
                   {tableNumber["option" + (index + 1)]}
                 </div>
-              )} 
+              )}
             </div>
           ))}
       </div>
