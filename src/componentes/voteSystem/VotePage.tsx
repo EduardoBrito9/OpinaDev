@@ -7,7 +7,6 @@ import {
   validateVoteOptionUser,
 } from "../../validateFunctions/validateDataType";
 import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
-// import { UpdateVote } from "../../types/propsTypes/typesProps";
 import useMyContext from "../../context/functionContext";
 
 const VotePage = () => {
@@ -56,13 +55,14 @@ const VotePage = () => {
     const columnName = "option" + index;
     if (
       validateVoteOptionUser(tableNumber, columnName) &&
-      !voteTable.includes(user.id)
+      voteTable.includes(user.id)
     ) {
       voteTable.push(user.id);
       const updateObj: UpdateData = {};
-      updateObj[columnName] = tableNumber[columnName]++;
+      updateObj[columnName] = tableNumber[columnName] += 1;
       updateObj["users_already_voted"] = voteTable;
       await supabase.from("votesTable").update(updateObj).eq("post_id", id);
+      getVoteTable()
     } else {
       console.log("you already");
     }
@@ -81,7 +81,11 @@ const VotePage = () => {
               key={item}
             >
               {item}
-              <div></div>
+              {validateVoteOptionUser(tableNumber, "option" + (index + 1)) && (
+                <div className="text-white">
+                  {tableNumber["option" + (index + 1)]}
+                </div>
+              )} 
             </div>
           ))}
       </div>

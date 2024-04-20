@@ -64,7 +64,6 @@ export interface VoteTableType {
 }
 
 export interface UpdateVote {
-  [key: string]: number 
+  [ key:  string]: number;
   columnName: number;
-  users_already_voted: string[];
 }
