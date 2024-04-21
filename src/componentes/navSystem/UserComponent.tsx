@@ -24,7 +24,7 @@ const UserComponent: React.FC<PropType> = ({
             <img src={user.user_metadata.avatar_url} alt="" />
           )}
         </button>
-        {miniModal && <Modal />}
+        {miniModal && <Modal  setMiniModal={setMiniModal} />}
       </div>
     )
   );

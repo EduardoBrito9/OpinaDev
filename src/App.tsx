@@ -74,7 +74,6 @@ function App() {
                 element={
                   <HomePage
                     voteSection={voteSection}
-                    setVoteSection={setVoteSection}
                   />
                 }
               />

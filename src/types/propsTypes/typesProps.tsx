@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
 
 export interface PropType {
-  modalRef: React.MutableRefObject<HTMLDivElement | null>;
-  miniModal: boolean;
+  modalRef?: React.MutableRefObject<HTMLDivElement | null>;
+  miniModal?: boolean;
   setMiniModal: (miniModal: boolean) => void;
 }
 //interface para propriedades do elemento button
@@ -43,7 +43,7 @@ export interface VoteTypeStructure {
 }
 export interface VoteSectionType {
   voteSection: VoteTypeStructure[];
-  setVoteSection: (voteSection: VoteTypeStructure[]) => void;
+  setVoteSection?: (voteSection: VoteTypeStructure[]) => void;
 }
 
 export interface VoteDataType {

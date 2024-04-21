@@ -5,8 +5,9 @@ import { GiPadlockOpen } from "react-icons/gi";
 import ButtonProfileOptions from "../elements/ButtonProfileOptions";
 import ButtonLogout from "../elements/ButtonLogout";
 import useMyContext from "../../context/functionContext";
+import { PropType } from "../../types/propsTypes/typesProps";
 
-const Modal = () => {
+const Modal: React.FC<PropType> = ({ setMiniModal }) => {
   const { user } = useMyContext();
   const handleLogout = async () => {
     try {
@@ -16,13 +17,23 @@ const Modal = () => {
     }
   };
   return (
-    <div className=" bg-black  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
+    <div className=" z-40 bg-black  animate-renderAnimationModal absolute space-y-4 top-16 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
       <div>
-        <ButtonProfileOptions path={`/Profile/${user.id}`}>
+        <ButtonProfileOptions
+          onclickButton={() => {
+            setMiniModal(false);
+          }}
+          path={`/Profile/${user.id}`}
+        >
           Profile <CiSettings className=" w-5 h-5" />
         </ButtonProfileOptions>
 
-        <ButtonProfileOptions path="/CreatePost">
+        <ButtonProfileOptions
+          onclickButton={() => {
+            setMiniModal(false);
+          }}
+          path="/CreatePost"
+        >
           Create <FiPlus className=" w-5 h-5" />
         </ButtonProfileOptions>
       </div>
