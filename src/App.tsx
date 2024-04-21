@@ -7,7 +7,7 @@ import CreatePost from "./componentes/voteSystem/CreatePost";
 
 import HomePage from "./componentes/HomePage";
 import { VoteTypeStructure } from "./types/propsTypes/typesProps";
-import ProfilePage from "./componentes/ProfilePage";
+import ProfilePage from "./componentes/profilePageComponents/ProfilePage";
 import { validateDataPostType } from "./validateFunctions/validateDataType";
 import { supabase } from "./lib/helper/supabaseClient";
 import VotePage from "./componentes/voteSystem/VotePage";
@@ -71,11 +71,7 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={
-                  <HomePage
-                    voteSection={voteSection}
-                  />
-                }
+                element={<HomePage voteSection={voteSection} />}
               />
               <Route path="/Profile/:id" element={<ProfilePage />} />
               <Route

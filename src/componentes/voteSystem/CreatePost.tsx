@@ -42,7 +42,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           voteOptions,
           user_name: user.user_metadata.user_name,
           url: user.user_metadata.avatar_url,
-          user_id: user.id
+          user_id: user.id,
         })
         .select(
           `*, votesTable (
@@ -50,13 +50,16 @@ const CreatePost: React.FC<VoteSectionType> = ({
         )`,
         )
         .single();
-      const postOp = await supabase
-        .from("votesTable")
-        .insert({ post_id: postV.data.id, option1: 0, option2: 0 });
+      const postOp = await supabase.from("votesTable").insert({
+        post_id: postV.data.id,
+        user_id: postV.data.user_id,
+        option1: 0,
+        option2: 0,
+      });
       console.log(postOp);
       setVoteSection([...voteSection, postV.data]);
       setIsSuccess(true);
-      navigate(`/vote/${postV.data.id}`)
+      navigate(`/vote/${postV.data.id}`);
     } catch (error) {
       console.log("ocorreu um erro", error);
     } finally {

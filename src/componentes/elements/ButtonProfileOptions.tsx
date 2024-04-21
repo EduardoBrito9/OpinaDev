@@ -8,13 +8,24 @@ const ButtonProfileOptions: React.FC<ButtonType> = ({
   path,
 }) => {
   return (
-    <Link
-      onClick={onclickButton}
-      to={`${path}`}
-      className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
-    >
-      {children}
-    </Link>
+    <div>
+      {path ? (
+        <Link
+          onClick={onclickButton}
+          to={`${path}`}
+          className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
+        >
+          {children}
+        </Link>
+      ) : (
+        <button
+          onClick={onclickButton}
+          className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
+        >
+          {children}
+        </button>
+      )}
+    </div>
   );
 };
 

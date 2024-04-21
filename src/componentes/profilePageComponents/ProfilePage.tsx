@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
-import { VoteSectionType } from "../types/propsTypes/typesProps";
-import { supabase } from "../lib/helper/supabaseClient";
+import { VoteSectionType } from "../../types/propsTypes/typesProps";
+import { supabase } from "../../lib/helper/supabaseClient";
 import {
   validateDataPostType,
   validateDataProfile,
-} from "../validateFunctions/validateDataType";
+} from "../../validateFunctions/validateDataType";
 import { useParams } from "react-router-dom";
-import { formatarData } from "../lib/helper/dataConversion/funcData";
+import { formatarData } from "../../lib/helper/dataConversion/funcData";
+import ModalProfile from "./ModalProfile";
 
 const ProfilePage = () => {
   const [postsUser, setPostsUser] = useState<VoteSectionType[]>([]);
-
+  const [modal, setModal] = useState(false);
+  const [currentPostId, setCurrentPostId] = useState("");
   const { id } = useParams();
 
   const getPostsUser = useCallback(async () => {
@@ -35,7 +37,7 @@ const ProfilePage = () => {
   return (
     <div className="w-full flex-1 ">
       <div className=" rounded-md border border-modalColor">
-        <div className="relative w-full overflow-auto">
+        <div className=" w-full">
           <table className="w-full caption-bottom text-sm">
             <thead className="text-grayText">
               <tr className="border border-modalColor transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -58,7 +60,10 @@ const ProfilePage = () => {
               postsUser.map(
                 (item) =>
                   validateDataProfile(item) && (
-                    <tbody className="[&amp;_tr:last-child]:border-0 position: relative;">
+                    <tbody
+                      key={item.id}
+                      className="[&amp;_tr:last-child]:border-0"
+                    >
                       <tr className="border border-modalColor transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
                           {item.title}
@@ -74,8 +79,12 @@ const ProfilePage = () => {
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                           {formatarData(item.endDate)}
                         </td>
-                        <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
+                        <td className=" relative p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                           <button
+                            onClick={() => {
+                              setModal(!modal);
+                              setCurrentPostId(item.id);
+                            }}
                             className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
                             type="button"
                             aria-haspopup="dialog"
@@ -110,6 +119,7 @@ const ProfilePage = () => {
               <tbody></tbody>
             )}
           </table>
+          {modal && <ModalProfile currentPostId={currentPostId} />}
         </div>
       </div>
     </div>
