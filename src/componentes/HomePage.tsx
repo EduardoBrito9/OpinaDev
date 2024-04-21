@@ -4,12 +4,11 @@ import { VoteSectionType } from "../types/propsTypes/typesProps";
 
 const HomePage: React.FC<VoteSectionType> = ({
   voteSection,
-  setVoteSection,
 }) => {
   const numeroSorteado = () => {
     return Math.floor(Math.random() * 4) + 1;
   };
-  const arrayEmoji = ["🔔", "🤖", "🔔", "🔔", "🔔"];
+  const arrayEmoji = ["🔔", "🤖", "🎷", "📺", "🤔"];
 
   return (
     <section className="space-y-9 text-green-500 ">
@@ -35,7 +34,9 @@ const HomePage: React.FC<VoteSectionType> = ({
                     {item.title}
                   </p>
                   <p className=" text-gray-400">{formatarData(item.endDate)}</p>
-                  <p>{arrayEmoji[numeroSorteado()]}</p>
+                  <span className=" absolute -top-8 right-0 text-3xl">
+                    {arrayEmoji[numeroSorteado()]}
+                  </span>
                 </div>
                 <div className=" -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ring-green-500 bg-green-500 bg-opacity-10"></div>
               </div>

@@ -36,13 +36,13 @@ const CreatePost: React.FC<VoteSectionType> = ({
       const postV = await supabase
         .from("OpinaDev")
         .insert({
-          created_by: user.id,
           title,
           description,
           endDate: value,
           voteOptions,
           user_name: user.user_metadata.user_name,
           url: user.user_metadata.avatar_url,
+          user_id: user.id
         })
         .select(
           `*, votesTable (

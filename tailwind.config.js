@@ -8,6 +8,7 @@ export default {
       },
       colors: {
         modalColor: "#252525",
+        grayText: "#A8A29E",
       },
       animation: {
         upup: "upup 1s infinite",

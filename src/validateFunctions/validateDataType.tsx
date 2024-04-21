@@ -1,4 +1,9 @@
-import { UpdateVote, VoteSectionType, VoteTableType } from "../types/propsTypes/typesProps";
+import {
+  UpdateVote,
+  VoteSectionType,
+  VoteTableType,
+  VoteTypeStructure,
+} from "../types/propsTypes/typesProps";
 import { UserIN } from "../types/userTypes/User";
 import { UserMetadataIN } from "../types/userTypes/userMetaData";
 
@@ -47,14 +52,31 @@ export const validateDataVoteTableType = (
 //function para verificar se a opcao em que o usuario votou existe.
 
 export const validateVoteOptionUser = (
-  value: unknown, optionName:string
+  value: unknown,
+  optionName: string,
 ): value is UpdateVote => {
   if (value && typeof value === "object" && optionName in value) {
-    console.log(optionName)
+    console.log(optionName);
     return true;
   } else {
     return false;
   }
 };
 
+//funcao para tipagem de cada coluna puxada da table DevOpina para profile Page
 
+export const validateDataProfile = (
+  value: unknown,
+): value is VoteTypeStructure => {
+  if (
+    value &&
+    typeof value === "object" &&
+    "created_at" in value &&
+    "endDate" in value &&
+    "title" in value
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};

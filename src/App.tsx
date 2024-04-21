@@ -78,7 +78,7 @@ function App() {
                   />
                 }
               />
-              <Route path="/Profile" element={<ProfilePage />} />
+              <Route path="/Profile/:id" element={<ProfilePage />} />
               <Route
                 path="/CreatePost"
                 element={

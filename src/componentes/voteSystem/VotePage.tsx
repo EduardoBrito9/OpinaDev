@@ -10,7 +10,6 @@ import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
 import useMyContext from "../../context/functionContext";
 
 const VotePage = () => {
-  // const [voteQuant, setVoteQuant] = useState<number[]>([]);
   const { user } = useMyContext();
   const { id } = useParams();
   const [votePost, setVotePost] = useState<VoteTypeStructure>(
