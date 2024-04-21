@@ -29,6 +29,8 @@ export interface VoteStateType {
   voteOptions: string[];
   setVoteOptions: (voteOptions: string[]) => void;
   placeholder: string;
+  erros: string[];
+  setErros: (erros: string[]) => void;
 }
 export interface VoteTypeStructure {
   created_at: string;
@@ -64,6 +66,6 @@ export interface VoteTableType {
 }
 
 export interface UpdateVote {
-  [ key:  string]: number;
+  [key: string]: number;
   columnName: number;
 }

@@ -4,11 +4,12 @@ import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
 import { VoteSectionType } from "../../types/propsTypes/typesProps";
 import InputElement from "../elements/InputElement";
-// import VoteDataEffect from "../../lib/helper/Effects/VoteDataEffect";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 import Calendar from "react-calendar";
 import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
+import { Error } from "@mui/icons-material";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -25,6 +26,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
   type ValuePiece = Date | null;
   type Value = ValuePiece | [ValuePiece, ValuePiece];
   const [value, onChange] = useState<Value>(new Date());
+  const [erros, setErros] = useState<string[]>([]);
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
 
@@ -69,12 +71,27 @@ const CreatePost: React.FC<VoteSectionType> = ({
 
   return (
     <div className=" max-w-5xl mx-auto">
+      <ul className="absolute top-10 right-[45%] z-30 space-y-2">
+        {erros &&
+          erros.map((item, index) => (
+            <li key={index}>
+              <Alert
+                className="animate-renderAnimation"
+                icon={<Error fontSize="inherit" />}
+                severity="error"
+              >
+                {item}
+              </Alert>
+            </li>
+          ))}
+      </ul>
+
       <form
         className=" flex  flex-col  gap-7 text-white max-w-[1000px] relative"
         onSubmit={postVerification}
       >
         {isLoading && (
-          <div>
+          <div className=" absolute border">
             <AlertPostLoading />
           </div>
         )}
@@ -108,6 +125,8 @@ const CreatePost: React.FC<VoteSectionType> = ({
           placeholder="Pressione enter para adicionar opcoes"
           setVoteOptions={setVoteOptions}
           voteOptions={voteOptions}
+          setErros={setErros}
+          erros={erros}
         />
 
         <InputElement

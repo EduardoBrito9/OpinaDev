@@ -5,11 +5,18 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
   setVoteOptions,
   voteOptions,
   placeholder,
+  setErros,
+  erros,
 }) => {
-  //funcao para verificar e adicionar opcoes de votos
   const addingVoteOption = async (value: string) => {
     if (!voteOptions.includes(value)) {
       setVoteOptions([...voteOptions, value]);
+    } else {
+      setErros([...erros, "Opcao ja existente"]);
+      setTimeout(() => {
+        const newEr = erros.slice(1);
+        setErros(newEr);
+      }, 1500);
     }
   };
 
