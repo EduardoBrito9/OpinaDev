@@ -27,7 +27,6 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
 
   //funcao para deletar opcao de voto
   const deleteOption = (item: string) => {
-    console.log(item);
     const index = voteOptions.indexOf(item);
     const newOptions = [...voteOptions];
     newOptions.splice(index, 1);

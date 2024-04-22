@@ -52,23 +52,25 @@ const CreatePost: React.FC<VoteSectionType> = ({
         )`,
         )
         .single();
-      const postOp = await supabase.from("votesTable").insert({
+      await supabase.from("votesTable").insert({
         post_id: postV.data.id,
         user_id: postV.data.user_id,
         option1: 0,
         option2: 0,
         option3: 0,
         option4: 0,
-        option5:0,
-        option6:0,
-        option7:0,
-        option8:0,
-        option9:0,
-        option10:0,
+        option5: 0,
+        option6: 0,
+        option7: 0,
+        option8: 0,
+        option9: 0,
+        option10: 0,
       });
-      console.log(postOp);
-
-      // const {data, error} = await supabase.from('tablesVote').insert({})
+      await supabase.from("comments").insert({
+        post_id: postV.data.id,
+        comments:[{}],
+        user_id: postV.data.user_id
+      });
 
       setVoteSection([...voteSection, postV.data]);
       setIsSuccess(true);

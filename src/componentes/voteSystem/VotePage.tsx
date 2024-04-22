@@ -8,6 +8,7 @@ import {
 } from "../../validateFunctions/validateDataType";
 import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
 import useMyContext from "../../context/functionContext";
+import CommentsComponent from "../comments/CommentsComponent";
 
 const VotePage = () => {
   const { user } = useMyContext();
@@ -21,7 +22,6 @@ const VotePage = () => {
   const getVotePost = useCallback(async () => {
     const { data } = await supabase.from("OpinaDev").select().eq("id", `${id}`);
     if (validateDataPostType(data)) {
-      console.log(data);
       setVotePost(data[0]);
     } else {
       console.log("error");
@@ -67,16 +67,16 @@ const VotePage = () => {
     }
   };
   return (
-    <div className=" space-y-20">
+    <div className=" space-y-48">
       <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1>
-      <div>
+      <div className=" space-y-10">
         {Array.isArray(votePost.voteOptions) &&
           votePost.voteOptions.map((item, index) => (
             <div
               onClick={() => {
                 voteCount(index + 1);
               }}
-              className=" text-2xl hover: cursor-pointer flex gap-10"
+              className=" text-xl hover: cursor-pointer flex gap-10"
               key={item}
             >
               <div className=" w-[250px]">{item}</div>
@@ -89,6 +89,7 @@ const VotePage = () => {
             </div>
           ))}
       </div>
+      <CommentsComponent />
     </div>
   );
 };

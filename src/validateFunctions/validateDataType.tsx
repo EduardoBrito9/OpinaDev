@@ -56,7 +56,6 @@ export const validateVoteOptionUser = (
   optionName: string,
 ): value is UpdateVote => {
   if (value && typeof value === "object" && optionName in value) {
-    console.log(optionName);
     return true;
   } else {
     return false;
