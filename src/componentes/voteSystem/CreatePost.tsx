@@ -57,8 +57,19 @@ const CreatePost: React.FC<VoteSectionType> = ({
         user_id: postV.data.user_id,
         option1: 0,
         option2: 0,
+        option3: 0,
+        option4: 0,
+        option5:0,
+        option6:0,
+        option7:0,
+        option8:0,
+        option9:0,
+        option10:0,
       });
       console.log(postOp);
+
+      // const {data, error} = await supabase.from('tablesVote').insert({})
+
       setVoteSection([...voteSection, postV.data]);
       setIsSuccess(true);
       navigate(`/vote/${postV.data.id}`);
@@ -141,13 +152,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         />
         <Calendar className="w-[300px]" onChange={onChange} value={value} />
 
-        <button
-          // onClick={postVerification}
-          // disabled={isDisabled}
-          className=" bg-orange-600 py-2 rounded `"
-        >
-          just a test
-        </button>
+        <button className=" bg-orange-600 py-2 rounded `">just a test</button>
       </form>
     </div>
   );

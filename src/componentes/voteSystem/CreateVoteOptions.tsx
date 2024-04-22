@@ -9,12 +9,17 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
   erros,
 }) => {
   const addingVoteOption = async (value: string) => {
-    if (!voteOptions.includes(value)) {
+    if (
+      !voteOptions.includes(value) &&
+      value.length &&
+      voteOptions.length < 10
+    ) {
       setVoteOptions([...voteOptions, value]);
     } else {
-      setErros([...erros, "Opcao ja existente"]);
+      setErros([...erros, "Opcao invalida"]);
       setTimeout(() => {
-        const newEr = erros.slice(1);
+        const newEr = [...erros];
+        newEr.slice(0, 1);
         setErros(newEr);
       }, 1500);
     }
