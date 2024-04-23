@@ -11,6 +11,7 @@ import ProfilePage from "./componentes/profilePageComponents/ProfilePage";
 import { validateDataPostType } from "./validateFunctions/validateDataType";
 import { supabase } from "./lib/helper/supabaseClient";
 import VotePage from "./componentes/voteSystem/VotePage";
+import Footer from "./componentes/Footer";
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
@@ -61,17 +62,21 @@ function App() {
     <MyContextProvider>
       <BrowserRouter>
         <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-20 p-5 ">
+          <Nav
+            modalRef={modalRef}
+            miniModal={miniModal}
+            setMiniModal={setMiniModal}
+          />
           <div className=" w-full flex-1 space-y-12">
-            <Nav
-              modalRef={modalRef}
-              miniModal={miniModal}
-              setMiniModal={setMiniModal}
-            />
-
             <Routes>
               <Route
                 path="/"
-                element={<HomePage setVoteSection={setVoteSection} voteSection={voteSection} />}
+                element={
+                  <HomePage
+                    setVoteSection={setVoteSection}
+                    voteSection={voteSection}
+                  />
+                }
               />
               <Route path="/Profile/:id" element={<ProfilePage />} />
               <Route
@@ -86,6 +91,7 @@ function App() {
               <Route path="/vote/:id" element={<VotePage />} />
             </Routes>
           </div>
+          <Footer />
         </main>
       </BrowserRouter>
     </MyContextProvider>

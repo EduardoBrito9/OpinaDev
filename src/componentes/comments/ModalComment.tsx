@@ -17,7 +17,7 @@ const ModalComment: React.FC<{
     getComments();
   };
 
-  const editComment = async (event: Event) => {
+  const editComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await supabase
       .from("comments")
