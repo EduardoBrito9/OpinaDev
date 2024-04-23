@@ -13,7 +13,8 @@ const CommentsComponent = () => {
   const [currentComment, setCurrentComments] = useState("");
   const [commentId, setCommentId] = useState<number>()
   const [comments, setComments] = useState<CommentsDataType[]>([]);
-  const [modalComment, setModalComment] = useState(false)
+  const [modalComment, setModalComment] = useState(false);
+  const [commentValue, setCommentValue] = useState('')
 
   const postComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,10 +47,11 @@ const CommentsComponent = () => {
     <section>
       {comments &&
         comments.map((item) => (
-          <div className=" w-[300px] flex justify-between mb-5">
+          <div key={item.id} className=" w-[300px] flex justify-between mb-5">
             {item.commentsColumn}{" "}
             <button
               onClick={() => {
+                setCommentValue(item.commentsColumn)
                 setCommentId(item.id)
                 setModalComment(!modalComment)
               }}
@@ -90,7 +92,7 @@ const CommentsComponent = () => {
           value={currentComment}
         />
       </form>
-      {modalComment && commentId && <ModalComment commentId={commentId}/>}
+      {modalComment && commentId && <ModalComment commentId={commentId} commentValue={commentValue} getComments={getComments}/>}
     </section>
   );
 };
