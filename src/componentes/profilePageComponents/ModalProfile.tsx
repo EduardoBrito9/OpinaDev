@@ -12,6 +12,7 @@ const ModalProfile: React.FC<{ currentPostId: string }> = ({
 }) => {
   const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const deletePost = async () => {
     setLoading(true);
     try {
@@ -27,7 +28,7 @@ const ModalProfile: React.FC<{ currentPostId: string }> = ({
   return (
     <section>
       {loading && (
-        <Alert icon={<Check fontSize="inherit" />} severity="info">
+        <Alert className="absolute right-[37%] top-10 block" icon={<Check fontSize="inherit" />} severity="info">
           Here is a gentle confirmation that your action was successful.
         </Alert>
       )}

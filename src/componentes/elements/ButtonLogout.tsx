@@ -1,7 +1,7 @@
 import React from "react";
 import { ButtonType } from "../../types/propsTypes/typesProps";
 
-const ButtonProfileOptions: React.FC<ButtonType> = ({
+const ButtonLogout: React.FC<ButtonType> = ({
   children,
   onclickButton,
 }) => {
@@ -15,4 +15,4 @@ const ButtonProfileOptions: React.FC<ButtonType> = ({
   );
 };
 
-export default ButtonProfileOptions;
+export default ButtonLogout;
