@@ -71,7 +71,7 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={<HomePage voteSection={voteSection} />}
+                element={<HomePage setVoteSection={setVoteSection} voteSection={voteSection} />}
               />
               <Route path="/Profile/:id" element={<ProfilePage />} />
               <Route

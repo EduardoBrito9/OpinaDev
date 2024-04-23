@@ -69,3 +69,19 @@ export interface UpdateVote {
   [key: string]: number;
   columnName: number;
 }
+
+//comments
+
+export interface CommentsDataType {
+  commentsColumn: string;
+  created_at: string;
+  id: number;
+  post_id: string;
+  url: string;
+  user_id: string;
+  user_name: string;
+}
+
+export interface CommentsArray {
+  data: CommentsDataType[];
+}

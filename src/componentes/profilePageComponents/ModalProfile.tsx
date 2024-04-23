@@ -1,10 +1,7 @@
 import { CiLink } from "react-icons/ci";
 import ButtonProfileOptions from "../elements/ButtonProfileOptions";
-
 import { FiTrash } from "react-icons/fi";
-
 import React, { useState } from "react";
-
 import { RxPencil1 } from "react-icons/rx";
 import { supabase } from "../../lib/helper/supabaseClient";
 import { Alert } from "@mui/material";

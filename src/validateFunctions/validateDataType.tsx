@@ -1,4 +1,5 @@
 import {
+  CommentsArray,
   UpdateVote,
   VoteSectionType,
   VoteTableType,
@@ -74,6 +75,18 @@ export const validateDataProfile = (
     "endDate" in value &&
     "title" in value
   ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+//funcao para verificacao dos dados da table "comments"
+
+export const validateDataComments = (
+  value: unknown,
+): value is CommentsArray => {
+  if (Array.isArray(value) && value.every((item) => "commentsColumn" in item)) {
     return true;
   } else {
     return false;

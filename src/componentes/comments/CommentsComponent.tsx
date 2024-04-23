@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import InputElement from "../elements/InputElement";
 import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
 import { useParams } from "react-router-dom";
+import { CommentsDataType } from "../../types/propsTypes/typesProps";
+import { validateDataComments } from "../../validateFunctions/validateDataType";
 
 const CommentsComponent = () => {
   const { id } = useParams();
   const { user } = useMyContext();
   const [currentComment, setCurrentComments] = useState("");
-  const [comments, setComments] = useState<string[]>([]);
-  console.log(setComments);
+  const [comments, setComments] = useState<CommentsDataType[]>([]);
 
   const postComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -21,22 +22,26 @@ const CommentsComponent = () => {
       commentsColumn: currentComment,
     });
     setCurrentComments("");
+    getComments();
   };
 
-  const getComments = () => {
-    console.log('oi')
-  };
+  const getComments = useCallback(async () => {
+    const { data } = await supabase
+      .from("comments")
+      .select("*")
+      .eq("post_id", id);
+    if (validateDataComments(data)) {
+      setComments(data);
+    }
+  }, [id]);
 
   useEffect(() => {
     getComments();
-  }, []);
+  }, [getComments]);
 
   return (
     <section>
-      {comments &&
-        comments.map((item) => {
-          return <div>{item}</div>;
-        })}
+      {comments && comments.map((item) => <div>{item.commentsColumn}</div>)}
       <form onSubmit={postComment}>
         <InputElement
           onChange={({ target }) => {
