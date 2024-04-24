@@ -6,15 +6,16 @@ import { useParams } from "react-router-dom";
 import { CommentsDataType } from "../../types/propsTypes/typesProps";
 import { validateDataComments } from "../../validateFunctions/validateDataType";
 import ModalComment from "./ModalComment";
+import { formatarData } from "../../lib/helper/dataConversion/funcData";
 
 const CommentsComponent = () => {
   const { id } = useParams();
   const { user } = useMyContext();
   const [currentComment, setCurrentComments] = useState("");
-  const [commentId, setCommentId] = useState<number>()
+  const [commentId, setCommentId] = useState<number>();
   const [comments, setComments] = useState<CommentsDataType[]>([]);
   const [modalComment, setModalComment] = useState(false);
-  const [commentValue, setCommentValue] = useState('')
+  const [commentValue, setCommentValue] = useState("");
 
   const postComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,55 +45,87 @@ const CommentsComponent = () => {
   }, [getComments]);
 
   return (
-    <section>
-      {comments &&
-        comments.map((item) => (
-          <div key={item.id} className=" w-[300px] flex justify-between items-center mb-5">
-            {item.commentsColumn}{" "}
-           {item.user_id === user.id && <button
-              onClick={() => {
-                setCommentValue(item.commentsColumn)
-                setCommentId(item.id)
-                setModalComment(!modalComment)
+    <section className="w-full max-w-[600px] space-y-8 h-[600px] overflow-hidden ">
+      <h1 className=" text-3xl font-medium">Comentarios em tempo real 😉</h1>
+      <section className="border border-modalColor rounded-md">
+        <div className=" p-5 flex flex-col gap-7">
+          <form onSubmit={postComment}>
+            <InputElement
+              onChange={({ target }) => {
+                setCurrentComments(target.value);
               }}
-              className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
-              type="button"
-              aria-haspopup="dialog"
-              aria-expanded="false"
-              aria-controls="radix-:ro:"
-              data-state="closed"
-            >
-              <span className="sr-only">Open menu</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-more-horizontal h-4 w-4"
-              >
-                <circle cx="12" cy="12" r="1"></circle>
-                <circle cx="19" cy="12" r="1"></circle>
-                <circle cx="5" cy="12" r="1"></circle>
-              </svg>
-            </button>}
+              placeholder="comente..."
+              type="text"
+              value={currentComment}
+            />
+          </form>
+          <div className=" flex flex-col gap-4">
+            {comments &&
+              comments.map((item) => (
+                <div
+                  key={item.id}
+                  className=" w-full flex items-start gap-3 mb-5"
+                >
+                  <img
+                    className="rounded-full h-14 w-14 overflow-hidden"
+                    src={item.url}
+                    alt=""
+                  />
+                  <div className="flex flex-col">
+                    <div className="flex gap-3 items-start">
+                      <p>{item.user_name}</p>
+                      <p className="text-sm text-gray-400 ">
+                        {formatarData(item.created_at)}
+                      </p>
+                      {item.user_id === user.id && (
+                        <button
+                          onClick={() => {
+                            setCommentValue(item.commentsColumn);
+                            setCommentId(item.id);
+                            setModalComment(!modalComment);
+                          }}
+                          className="inline-flex items-start justify-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
+                          type="button"
+                          aria-haspopup="dialog"
+                          aria-expanded="false"
+                          aria-controls="radix-:ro:"
+                          data-state="closed"
+                        >
+                          <span className="sr-only">Open menu</span>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-more-horizontal h-4 w-4"
+                          >
+                            <circle cx="12" cy="12" r="1"></circle>
+                            <circle cx="19" cy="12" r="1"></circle>
+                            <circle cx="5" cy="12" r="1"></circle>
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                    <span className=" font-bold">{item.commentsColumn} </span>
+                  </div>
+                </div>
+              ))}
           </div>
-        ))}
-      <form onSubmit={postComment}>
-        <InputElement
-          onChange={({ target }) => {
-            setCurrentComments(target.value);
-          }}
-          placeholder="vote em qual voce acha melhor..."
-          type="text"
-          value={currentComment}
-        />
-      </form>
-      {modalComment && commentId && <ModalComment commentId={commentId} commentValue={commentValue} getComments={getComments}/>}
+        </div>
+
+        {modalComment && commentId && (
+          <ModalComment
+            commentId={commentId}
+            commentValue={commentValue}
+            getComments={getComments}
+          />
+        )}
+      </section>
     </section>
   );
 };

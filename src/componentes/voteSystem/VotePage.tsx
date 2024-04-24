@@ -72,52 +72,58 @@ const VotePage = () => {
   };
 
   return (
-    <div className=" space-y-32 flex justify-between">
-      <div className="flex items-center">
-        {/* <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1> */}
-        <div className=" flex flex-col gap-10 border-r border-r-zinc-300">
-          {Array.isArray(votePost.voteOptions) &&
-            votePost.voteOptions.map((item, index) => (
-              <div
-                onClick={() => {
-                  voteCount(index + 1);
-                }}
-                className=" text-xl hover: cursor-pointer flex py-5"
-                key={item}
-              >
-                <div className=" w-[250px]">{item}</div>
-              </div>
-            ))}
-        </div>
-        <div className="flex flex-col gap-10">
-          {Array.isArray(votePost.voteOptions) &&
-            votePost.voteOptions.map(
-              (item, index) =>
-                validateVoteOptionUser(tableNumber, "option" + (index + 1)) && (
-                  <div
-                    key={index}
-                    className={`text-white flex items-center gap-3`}
-                  >
+    <section className="space-y-20">
+       <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1>
+      <div className=" flex justify-between gap-10 items-start">
+        <div className="flex items-center">
+        
+          <div className=" flex flex-col gap-10 border-r border-r-zinc-300">
+            {Array.isArray(votePost.voteOptions) &&
+              votePost.voteOptions.map((item, index) => (
+                <div
+                  onClick={() => {
+                    voteCount(index + 1);
+                  }}
+                  className=" text-xl hover: cursor-pointer flex py-5"
+                  key={item}
+                >
+                  <div className=" w-[250px]">{item}</div>
+                </div>
+              ))}
+          </div>
+          <div className="flex flex-col gap-10">
+            {Array.isArray(votePost.voteOptions) &&
+              votePost.voteOptions.map(
+                (item, index) =>
+                  validateVoteOptionUser(
+                    tableNumber,
+                    "option" + (index + 1),
+                  ) && (
                     <div
-                      className={`${
-                        tableNumber["option" + (index + 1)] === maxOption
-                          ? "bg-yellow-500"
-                          : ""
-                      } border border-modalColor py-8 pr-5 rounded-tr-md rounded-br-md`}
-                      style={{
-                        width: `${
-                          tableNumber["option" + (index + 1)] * 0.2
-                        }rem`,
-                      }}
-                    ></div>
-                    <span>{tableNumber["option" + (index + 1)]}</span>
-                  </div>
-                ),
-            )}
+                      key={index}
+                      className={`text-white flex items-center gap-3`}
+                    >
+                      <div
+                        className={`${
+                          tableNumber["option" + (index + 1)] === maxOption
+                            ? "bg-yellow-500"
+                            : ""
+                        } border border-modalColor py-8 pr-5 rounded-tr-md rounded-br-md`}
+                        style={{
+                          width: `${
+                            tableNumber["option" + (index + 1)] * 0.2
+                          }rem`,
+                        }}
+                      ></div>
+                      <span>{tableNumber["option" + (index + 1)]}</span>
+                    </div>
+                  ),
+              )}
+          </div>
         </div>
+        <CommentsComponent />
       </div>
-      <CommentsComponent />
-    </div>
+    </section>
   );
 };
 
