@@ -47,9 +47,9 @@ const CommentsComponent = () => {
     <section>
       {comments &&
         comments.map((item) => (
-          <div key={item.id} className=" w-[300px] flex justify-between mb-5">
+          <div key={item.id} className=" w-[300px] flex justify-between items-center mb-5">
             {item.commentsColumn}{" "}
-            <button
+           {item.user_id === user.id && <button
               onClick={() => {
                 setCommentValue(item.commentsColumn)
                 setCommentId(item.id)
@@ -79,7 +79,7 @@ const CommentsComponent = () => {
                 <circle cx="19" cy="12" r="1"></circle>
                 <circle cx="5" cy="12" r="1"></circle>
               </svg>
-            </button>
+            </button>}
           </div>
         ))}
       <form onSubmit={postComment}>

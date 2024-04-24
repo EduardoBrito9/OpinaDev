@@ -18,6 +18,10 @@ const VotePage = () => {
   );
   const [voteTable, setVoteTable] = useState<string[]>([""]);
   const [tableNumber, setTableNumber] = useState({});
+  const optionValues = Object.keys(tableNumber)
+    .filter((key) => key.startsWith("option"))
+    .map((key) => tableNumber[key as keyof typeof tableNumber]);
+  const maxOption = Math.max(...optionValues);
 
   const getVotePost = useCallback(async () => {
     const { data } = await supabase.from("OpinaDev").select().eq("id", `${id}`);
@@ -54,11 +58,11 @@ const VotePage = () => {
     const columnName = "option" + index;
     if (
       validateVoteOptionUser(tableNumber, columnName) &&
-      !voteTable.includes(user.id)
+      voteTable.includes(user.id)
     ) {
       voteTable.push(user.id);
       const updateObj: UpdateData = {};
-      updateObj[columnName] = tableNumber[columnName] += 1;
+      updateObj[columnName] = tableNumber[columnName] += 5;
       updateObj["users_already_voted"] = voteTable;
       await supabase.from("votesTable").update(updateObj).eq("post_id", id);
       getVoteTable();
@@ -66,28 +70,51 @@ const VotePage = () => {
       console.log("you already");
     }
   };
-  return (
-    <div className=" space-y-48">
-      <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1>
-      <div className=" space-y-10">
-        {Array.isArray(votePost.voteOptions) &&
-          votePost.voteOptions.map((item, index) => (
-            <div
-              onClick={() => {
-                voteCount(index + 1);
-              }}
-              className=" text-xl hover: cursor-pointer flex gap-10"
-              key={item}
-            >
-              <div className=" w-[250px]">{item}</div>
 
-              {validateVoteOptionUser(tableNumber, "option" + (index + 1)) && (
-                <div className="text-white">
-                  {tableNumber["option" + (index + 1)]}
-                </div>
-              )}
-            </div>
-          ))}
+  return (
+    <div className=" space-y-32 flex justify-between">
+      <div className="flex items-center">
+        {/* <h1 className="text-3xl font-medium line-clamp-2">{votePost.title}</h1> */}
+        <div className=" flex flex-col gap-10 border-r border-r-zinc-300">
+          {Array.isArray(votePost.voteOptions) &&
+            votePost.voteOptions.map((item, index) => (
+              <div
+                onClick={() => {
+                  voteCount(index + 1);
+                }}
+                className=" text-xl hover: cursor-pointer flex py-5"
+                key={item}
+              >
+                <div className=" w-[250px]">{item}</div>
+              </div>
+            ))}
+        </div>
+        <div className="flex flex-col gap-10">
+          {Array.isArray(votePost.voteOptions) &&
+            votePost.voteOptions.map(
+              (item, index) =>
+                validateVoteOptionUser(tableNumber, "option" + (index + 1)) && (
+                  <div
+                    key={index}
+                    className={`text-white flex items-center gap-3`}
+                  >
+                    <div
+                      className={`${
+                        tableNumber["option" + (index + 1)] === maxOption
+                          ? "bg-yellow-500"
+                          : ""
+                      } border border-modalColor py-8 pr-5 rounded-tr-md rounded-br-md`}
+                      style={{
+                        width: `${
+                          tableNumber["option" + (index + 1)] * 0.2
+                        }rem`,
+                      }}
+                    ></div>
+                    <span>{tableNumber["option" + (index + 1)]}</span>
+                  </div>
+                ),
+            )}
+        </div>
       </div>
       <CommentsComponent />
     </div>
