@@ -45,10 +45,10 @@ const CommentsComponent = () => {
   }, [getComments]);
 
   return (
-    <section className="w-full max-w-[600px] space-y-8 h-[600px] overflow-hidden ">
+    <section className="w-full max-w-[600px] space-y-6 overflow-hidden ">
       <h1 className=" text-3xl font-medium">Comentarios em tempo real 😉</h1>
       <section className="border border-modalColor rounded-md">
-        <div className=" p-5 flex flex-col gap-7">
+        <div className=" p-5 flex flex-col gap-10 h-[600px] ">
           <form onSubmit={postComment}>
             <InputElement
               onChange={({ target }) => {
@@ -64,10 +64,10 @@ const CommentsComponent = () => {
               comments.map((item) => (
                 <div
                   key={item.id}
-                  className=" w-full flex items-start gap-3 mb-5"
+                  className=" w-[500px] flex gap-3 mb-5"
                 >
                   <img
-                    className="rounded-full h-14 w-14 overflow-hidden"
+                    className="rounded-full border border-indigo-600 h-16 w-16 overflow-hidden"
                     src={item.url}
                     alt=""
                   />

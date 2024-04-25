@@ -61,13 +61,13 @@ function App() {
   return (
     <MyContextProvider>
       <BrowserRouter>
-        <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-20 p-5 ">
+        <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-16 p-5 ">
           <Nav
             modalRef={modalRef}
             miniModal={miniModal}
             setMiniModal={setMiniModal}
           />
-          <div className=" w-full flex-1 space-y-12">
+          <div className=" w-full flex-1">
             <Routes>
               <Route
                 path="/"
