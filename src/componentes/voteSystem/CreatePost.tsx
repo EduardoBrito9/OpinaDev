@@ -6,10 +6,11 @@ import { VoteSectionType } from "../../types/propsTypes/typesProps";
 import InputElement from "../elements/InputElement";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
-import Calendar from "react-calendar";
+
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 import { Error } from "@mui/icons-material";
+import { Calendar } from "primereact/calendar";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -23,9 +24,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
-  type ValuePiece = Date | null;
-  type Value = ValuePiece | [ValuePiece, ValuePiece];
-  const [value, onChange] = useState<Value>(new Date());
+  const [date, setDate] = useState<Date | null>(null);
+  const today = new Date();
+  const maxDate = new Date(today.getFullYear(), 11, 31);
   const [erros, setErros] = useState<string[]>([]);
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
@@ -40,7 +41,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         .insert({
           title,
           description,
-          endDate: value,
+          endDate: "",
           voteOptions,
           user_name: user.user_metadata.user_name,
           url: user.user_metadata.avatar_url,
@@ -68,8 +69,8 @@ const CreatePost: React.FC<VoteSectionType> = ({
       });
       await supabase.from("comments").insert({
         post_id: postV.data.id,
-        comments:[{}],
-        user_id: postV.data.user_id
+        comments: [{}],
+        user_id: postV.data.user_id,
       });
 
       setVoteSection([...voteSection, postV.data]);
@@ -142,17 +143,18 @@ const CreatePost: React.FC<VoteSectionType> = ({
           erros={erros}
         />
 
-        <InputElement
+        <Calendar
+          className="bg-black z-10 py-3 px-4 border p-calendar-green border-modalColor rounded text-sm text-black outline-none focus:border-orange-500 focus:border-opacity-50  w-72"
           placeholder="Escolha uma data"
-          type="text"
-          name="Data Final"
-          id="Data Final"
-          onChange={() => {
-            console.log("nothing");
-          }}
-          value={`${value?.toString().substring(0, 15)}`}
+          value={date}
+          onChange={(e) => setDate(e.value as Date)}
+          dateFormat="M dd, yy"
+          showIcon
+          minDate={today}
+          maxDate={maxDate}
+          readOnlyInput
+          showButtonBar
         />
-        <Calendar className="w-[300px]" onChange={onChange} value={value} />
 
         <button className=" bg-orange-600 py-2 rounded `">just a test</button>
       </form>

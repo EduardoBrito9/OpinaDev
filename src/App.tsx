@@ -4,7 +4,7 @@ import Nav from "./componentes/navSystem/Nav";
 import { MyContextProvider } from "./context/Context";
 import { useEffect, useRef, useState } from "react";
 import CreatePost from "./componentes/voteSystem/CreatePost";
-
+import { PrimeReactProvider } from "primereact/api";
 import HomePage from "./componentes/HomePage";
 import { VoteTypeStructure } from "./types/propsTypes/typesProps";
 import ProfilePage from "./componentes/profilePageComponents/ProfilePage";
@@ -12,6 +12,7 @@ import { validateDataPostType } from "./validateFunctions/validateDataType";
 import { supabase } from "./lib/helper/supabaseClient";
 import VotePage from "./componentes/voteSystem/VotePage";
 import Footer from "./componentes/Footer";
+
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
@@ -59,42 +60,44 @@ function App() {
   }, []);
 
   return (
-    <MyContextProvider>
-      <BrowserRouter>
-        <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-16 p-5 ">
-          <Nav
-            modalRef={modalRef}
-            miniModal={miniModal}
-            setMiniModal={setMiniModal}
-          />
-          <div className=" w-full flex-1">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <HomePage
-                    setVoteSection={setVoteSection}
-                    voteSection={voteSection}
-                  />
-                }
-              />
-              <Route path="/Profile/:id" element={<ProfilePage />} />
-              <Route
-                path="/CreatePost"
-                element={
-                  <CreatePost
-                    voteSection={voteSection}
-                    setVoteSection={setVoteSection}
-                  />
-                }
-              />
-              <Route path="/vote/:id" element={<VotePage />} />
-            </Routes>
-          </div>
-          <Footer />
-        </main>
-      </BrowserRouter>
-    </MyContextProvider>
+    <PrimeReactProvider>
+      <MyContextProvider>
+        <BrowserRouter>
+          <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-16 p-5 ">
+            <Nav
+              modalRef={modalRef}
+              miniModal={miniModal}
+              setMiniModal={setMiniModal}
+            />
+            <div className=" w-full flex-1">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <HomePage
+                      setVoteSection={setVoteSection}
+                      voteSection={voteSection}
+                    />
+                  }
+                />
+                <Route path="/Profile/:id" element={<ProfilePage />} />
+                <Route
+                  path="/CreatePost"
+                  element={
+                    <CreatePost
+                      voteSection={voteSection}
+                      setVoteSection={setVoteSection}
+                    />
+                  }
+                />
+                <Route path="/vote/:id" element={<VotePage />} />
+              </Routes>
+            </div>
+            <Footer />
+          </main>
+        </BrowserRouter>
+      </MyContextProvider>
+    </PrimeReactProvider>
   );
 }
 
