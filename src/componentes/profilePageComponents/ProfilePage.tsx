@@ -5,7 +5,7 @@ import {
   validateDataPostType,
   validateDataProfile,
 } from "../../validateFunctions/validateDataType";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { formatarData } from "../../lib/helper/dataConversion/funcData";
 import ModalProfile from "./ModalProfile";
 
@@ -66,7 +66,7 @@ const ProfilePage = () => {
                     >
                       <tr className="border border-modalColor transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
-                          {item.title}
+                          <Link to={`/vote/${item.id}`}>{item.title}</Link>
                         </td>
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
                           <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground hover:bg-primary/80 bg-green-500">

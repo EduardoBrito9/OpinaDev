@@ -41,7 +41,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         .insert({
           title,
           description,
-          endDate: "",
+          endDate: date,
           voteOptions,
           user_name: user.user_metadata.user_name,
           url: user.user_metadata.avatar_url,
@@ -156,7 +156,14 @@ const CreatePost: React.FC<VoteSectionType> = ({
           showButtonBar
         />
 
-        <button className=" bg-orange-600 py-2 rounded `">just a test</button>
+        <button
+          className={`bg-orange-600 py-2 rounded ${
+            voteOptions.length >= 2 && date && title ? "" : "opacity-60"
+          }`}
+          disabled={voteOptions.length >= 2 && date && title ? false : true}
+        >
+          just a test
+        </button>
       </form>
     </div>
   );

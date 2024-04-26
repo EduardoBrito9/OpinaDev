@@ -31,10 +31,7 @@ const HomePage: React.FC<VoteSectionType> = ({ voteSection }) => {
                   <p className="text-2xl font-medium line-clamp-2">
                     {item.title}
                   </p>
-                  <p className=" text-gray-400 flex flex-col">
-                  <p>   {item.created_at}</p>
-                    <p> {item.endDate}</p>
-              
+                  <p className=" text-gray-400 ">
                     {formatarData(item.endDate)}
                   </p>
                   <span className=" absolute -top-8 right-0 text-3xl">
