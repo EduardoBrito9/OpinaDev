@@ -10,9 +10,15 @@ import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
 import useMyContext from "../../context/functionContext";
 import CommentsComponent from "../comments/CommentsComponent";
 
+import { differenceInSeconds } from "date-fns";
+
 const VotePage = () => {
   const { user } = useMyContext();
   const { id } = useParams();
+  const [days, setDays] = useState<number>();
+  const [hours, setHours] = useState<number>();
+  const [minutes, setMinutes] = useState<number>();
+  const [second, setSecond] = useState<number>();
   const [votePost, setVotePost] = useState<VoteTypeStructure>(
     {} as VoteTypeStructure,
   );
@@ -32,6 +38,23 @@ const VotePage = () => {
     }
   }, [id, setVotePost]);
 
+  const dateDistance = useCallback(() => {
+    const dateNOW = new Date();
+    const end = new Date(votePost.endDate.substring(0, 10));
+    const difference = differenceInSeconds(end, dateNOW);
+    const dias = Math.floor(difference / (3600 * 24));
+    const horas = Math.floor((difference % (3600 * 24)) / 3600);
+    const minutos = Math.floor((difference % 3600) / 60);
+    const segundos = difference % 60;
+    setDays(dias);
+    setHours(horas);
+    setMinutes(minutos);
+    setSecond(segundos);
+    setTimeout(() => {
+      dateDistance();
+    }, 1000);
+  }, [votePost]);
+
   useEffect(() => {
     getVotePost();
   }, [getVotePost]);
@@ -45,7 +68,8 @@ const VotePage = () => {
       setVoteTable(data[0].users_already_voted);
       setTableNumber(data[0]);
     }
-  }, [id]);
+    dateDistance();
+  }, [id, dateDistance]);
 
   useEffect(() => {
     getVoteTable();
@@ -58,7 +82,7 @@ const VotePage = () => {
     const columnName = "option" + index;
     if (
       validateVoteOptionUser(tableNumber, columnName) &&
-      voteTable.includes(user.id) 
+      voteTable.includes(user.id)
     ) {
       voteTable.push(user.id);
       const updateObj: UpdateData = {};
@@ -90,10 +114,10 @@ const VotePage = () => {
               clipRule="evenodd"
             ></path>
           </svg>
-          <span>0D:</span>
-          <span>0H:</span>
-          <span>0M:</span>
-          <span>0S</span>
+          <span>{days}D:</span>
+          <span>{hours}H:</span>
+          <span>{minutes}M:</span>
+          <span>{second}S</span>
         </div>
       </div>
 
