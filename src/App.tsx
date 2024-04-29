@@ -13,11 +13,11 @@ import { supabase } from "./lib/helper/supabaseClient";
 import VotePage from "./componentes/voteSystem/VotePage";
 import Footer from "./componentes/Footer";
 
-
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
   const [miniModal, setMiniModal] = useState(false);
+  const [loadingPost, setLoadingPost] = useState(false);
 
   //funcao que seta o estado miniModal para false, fazendo com que ele saia da tela
   const outsideClick = () => {
@@ -47,11 +47,16 @@ function App() {
   }, [miniModal]);
 
   const getPost = async () => {
-    const { data } = await supabase.from("OpinaDev").select("*");
-    if (validateDataPostType(data)) {
-      setVoteSection(data);
-    } else {
-      console.log("error");
+    setLoadingPost(true);
+    try {
+      const { data } = await supabase.from("OpinaDev").select("*");
+      if (validateDataPostType(data)) {
+        setVoteSection(data);
+      }
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setLoadingPost(false);
     }
   };
 
@@ -77,6 +82,7 @@ function App() {
                     <HomePage
                       setVoteSection={setVoteSection}
                       voteSection={voteSection}
+                      loadingPost={loadingPost}
                     />
                   }
                 />

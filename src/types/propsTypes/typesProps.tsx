@@ -46,6 +46,7 @@ export interface VoteTypeStructure {
 export interface VoteSectionType {
   voteSection: VoteTypeStructure[];
   setVoteSection: (voteSection: VoteTypeStructure[]) => void;
+  loadingPost?: boolean
 }
 
 export interface VoteDataType {
