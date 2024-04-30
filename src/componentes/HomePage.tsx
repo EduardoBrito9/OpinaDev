@@ -58,35 +58,41 @@ const HomePage: React.FC<VoteSectionType> = ({ voteSection, loadingPost }) => {
             );
           })}
         {voteSection &&
-          voteSection.map((item) => (
-            <Link
-              className="w-full md:w-96"
-              to={`/vote/${item.id}`}
-              key={item.id}
-            >
-              <div className="relative group">
-                <div className=" border border-stone-600 text-white p-5 space-y-3 rounded-md bg-modalColor group-hover:translate-x-3 group-hover:translate-y-3 transition-all">
-                  <h1 className=" flex items-center gap-2 text-stone-200">
-                    {" "}
-                    <button className=" rounded-full border-2 border-indigo-600 h-11 w-11 overflow-hidden">
-                      <img src={item.url} alt="" />
-                    </button>
-                    {item.user_name}
-                  </h1>
-                  <p className="text-2xl font-medium line-clamp-2">
-                    {item.title}
-                  </p>
-                  <p className=" text-gray-400 ">
-                    {formatarData(item.endDate)}
-                  </p>
-                  <span className=" absolute -top-8 right-0 text-3xl">
-                    {arrayEmoji[numeroSorteado()]}
-                  </span>
-                </div>
-                <div className=" -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ring-green-500 bg-green-500 bg-opacity-10"></div>
-              </div>
-            </Link>
-          ))}
+          voteSection.map((item) => {
+            if (!votePastSection.includes(item)) {
+              return (
+                <Link
+                  className="w-full md:w-96"
+                  to={`/vote/${item.id}`}
+                  key={item.id}
+                >
+                  <div className="relative group">
+                    <div className=" border border-stone-600 text-white p-5 space-y-3 rounded-md bg-modalColor group-hover:translate-x-3 group-hover:translate-y-3 transition-all">
+                      <h1 className=" flex items-center gap-2 text-stone-200">
+                        {" "}
+                        <button className=" rounded-full border-2 border-indigo-600 h-11 w-11 overflow-hidden">
+                          <img src={item.url} alt="" />
+                        </button>
+                        {item.user_name}
+                      </h1>
+                      <p className="text-2xl font-medium line-clamp-2">
+                        {item.title}
+                      </p>
+                      <p className=" text-gray-400 ">
+                        {formatarData(item.endDate)}
+                      </p>
+                      <span className=" absolute -top-8 right-0 text-3xl">
+                        {arrayEmoji[numeroSorteado()]}
+                      </span>
+                    </div>
+                    <div className=" -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ring-green-500 bg-green-500 bg-opacity-10"></div>
+                  </div>
+                </Link>
+              );
+            } else {
+              return null; // Se o item estiver no votePastSection, não renderize nada
+            }
+          })}
       </div>
       <h1 className="font-bold text-2xl text-red-400">Votos Expirados 🤖</h1>
       <div className=" grid grid-cols-3 gap-16 p-5">

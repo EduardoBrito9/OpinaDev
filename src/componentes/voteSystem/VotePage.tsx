@@ -50,10 +50,15 @@ const VotePage = () => {
     setHours(horas);
     setMinutes(minutos);
     setSecond(segundos);
-    setTimeout(() => {
-      dateDistance();
-    }, 1000);
-  }, [votePost]);
+    let timeoutId;
+    if (days && days > 0) {
+      timeoutId = setTimeout(() => {
+        dateDistance();
+      }, 1000);
+    } else {
+      clearTimeout(timeoutId);
+    }
+  }, [votePost, days]);
 
   useEffect(() => {
     getVotePost();
