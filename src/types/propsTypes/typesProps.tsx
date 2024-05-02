@@ -44,8 +44,12 @@ export interface VoteTypeStructure {
   url: string;
 }
 export interface VoteSectionType {
-  voteSection: VoteTypeStructure[];
-  setVoteSection: (voteSection: VoteTypeStructure[]) => void;
+  voteSection?: VoteTypeStructure[];
+  setVoteSection?: (voteSection: VoteTypeStructure[]) => void;
+  votePastSection?: VoteTypeStructure[];
+  index?: number;
+  setIndex?: (index: number) => void
+  setVotePastSection?: (votePastSection: VoteTypeStructure[]) => void;
   loadingPost?: boolean
 }
 

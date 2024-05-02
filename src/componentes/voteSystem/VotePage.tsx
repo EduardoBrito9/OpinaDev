@@ -1,18 +1,22 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { supabase } from "../../lib/helper/supabaseClient";
 import {
   validateDataPostType,
+  validateDataProfile,
   validateDataVoteTableType,
   validateVoteOptionUser,
 } from "../../validateFunctions/validateDataType";
-import { VoteTypeStructure } from "../../types/propsTypes/typesProps";
+import {
+  VoteSectionType,
+  VoteTypeStructure,
+} from "../../types/propsTypes/typesProps";
 import useMyContext from "../../context/functionContext";
 import CommentsComponent from "../comments/CommentsComponent";
 
 import { differenceInSeconds } from "date-fns";
 
-const VotePage = () => {
+const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
   const { user } = useMyContext();
   const { id } = useParams();
   const [days, setDays] = useState<number>();
@@ -39,26 +43,42 @@ const VotePage = () => {
   }, [id, setVotePost]);
 
   const dateDistance = useCallback(() => {
-    const dateNOW = new Date();
-    const end = new Date(votePost.endDate.substring(0, 10));
-    const difference = differenceInSeconds(end, dateNOW);
-    const dias = Math.floor(difference / (3600 * 24));
-    const horas = Math.floor((difference % (3600 * 24)) / 3600);
-    const minutos = Math.floor((difference % 3600) / 60);
-    const segundos = difference % 60;
-    setDays(dias);
-    setHours(horas);
-    setMinutes(minutos);
-    setSecond(segundos);
-    let timeoutId;
-    if (days && days > 0) {
-      timeoutId = setTimeout(() => {
+    let timeoutID;
+    if (typeof votePost.endDate === "string") {
+      const dateNOW = new Date();
+      const end = new Date(votePost.endDate.substring(0, 10));
+      const difference = differenceInSeconds(end, dateNOW);
+      const dias = Math.floor(difference / (3600 * 24));
+      const horas = Math.floor((difference % (3600 * 24)) / 3600);
+      const minutos = Math.floor((difference % 3600) / 60);
+      const segundos = difference % 60;
+      setDays(dias);
+      setHours(horas);
+      setMinutes(minutos);
+      setSecond(segundos);
+      timeoutID = setTimeout(() => {
         dateDistance();
       }, 1000);
-    } else {
-      clearTimeout(timeoutId);
+      if (
+        index !== undefined &&
+        votePastSection &&
+        votePost &&
+        validateDataProfile(votePastSection[index]) &&
+        validateDataProfile(votePost) &&
+        votePastSection[index].id === votePost.id
+      ) {
+        setDays(0)
+        setHours(0);
+        setMinutes(0);
+        setSecond(0);
+        clearTimeout(timeoutID);
+      } else {
+        timeoutID = setTimeout(() => {
+          dateDistance();
+        }, 1000);
+      }
     }
-  }, [votePost, days]);
+  }, [votePost, votePastSection, index]);
 
   useEffect(() => {
     getVotePost();

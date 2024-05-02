@@ -71,6 +71,7 @@ export const validateDataProfile = (
   if (
     value &&
     typeof value === "object" &&
+    "id" in value &&
     "created_at" in value &&
     "endDate" in value &&
     "title" in value

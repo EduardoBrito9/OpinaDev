@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./componentes/navSystem/Nav";
 import { MyContextProvider } from "./context/Context";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CreatePost from "./componentes/voteSystem/CreatePost";
 import { PrimeReactProvider } from "primereact/api";
 import HomePage from "./componentes/HomePage";
@@ -12,13 +12,17 @@ import { validateDataPostType } from "./validateFunctions/validateDataType";
 import { supabase } from "./lib/helper/supabaseClient";
 import VotePage from "./componentes/voteSystem/VotePage";
 import Footer from "./componentes/Footer";
+import { differenceInSeconds } from "date-fns";
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
   const modalRef = useRef<HTMLDivElement>(null);
   const [miniModal, setMiniModal] = useState(false);
   const [loadingPost, setLoadingPost] = useState(false);
-
+  const [votePastSection, setVotePastSection] = useState<VoteTypeStructure[]>(
+    [],
+  );
+  const [index, setIndex] = useState(0);
   //funcao que seta o estado miniModal para false, fazendo com que ele saia da tela
   const outsideClick = () => {
     setMiniModal(false);
@@ -64,6 +68,27 @@ function App() {
     getPost();
   }, []);
 
+  const votosExpirados = useCallback(() => {
+    if (voteSection) {
+      const expiredVotes = voteSection.filter((item) => {
+        const dateNOW = new Date();
+        const end = new Date(item.endDate.substring(0, 10));
+        const difference = differenceInSeconds(end, dateNOW);
+        const dias = Math.floor(difference / (3600 * 24));
+        const horas = Math.floor((difference % (3600 * 24)) / 3600);
+        const minutos = Math.floor((difference % 3600) / 60);
+        const segundos = difference % 60;
+        console.log(horas, minutos, segundos);
+        return dias <= 0 && horas <= 0 && minutos <= 0 && segundos <= 0;
+      });
+      if (setVotePastSection) setVotePastSection(expiredVotes);
+    }
+  }, [voteSection, setVotePastSection]);
+
+  useEffect(() => {
+    votosExpirados();
+  }, [votosExpirados]);
+
   return (
     <PrimeReactProvider>
       <MyContextProvider>
@@ -82,7 +107,11 @@ function App() {
                     <HomePage
                       setVoteSection={setVoteSection}
                       voteSection={voteSection}
+                      votePastSection={votePastSection}
+                      setVotePastSection={setVotePastSection}
                       loadingPost={loadingPost}
+                      index={index}
+                      setIndex={setIndex}
                     />
                   }
                 />
@@ -96,7 +125,12 @@ function App() {
                     />
                   }
                 />
-                <Route path="/vote/:id" element={<VotePage />} />
+                <Route
+                  path="/vote/:id"
+                  element={
+                    <VotePage votePastSection={votePastSection} index={index} />
+                  }
+                />
               </Routes>
             </div>
             <Footer />
