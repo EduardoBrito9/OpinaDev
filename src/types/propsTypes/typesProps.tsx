@@ -29,8 +29,6 @@ export interface VoteStateType {
   voteOptions: string[];
   setVoteOptions: (voteOptions: string[]) => void;
   placeholder: string;
-  erros: string[];
-  setErros: (erros: string[]) => void;
 }
 export interface VoteTypeStructure {
   created_at: string;

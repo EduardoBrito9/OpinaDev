@@ -8,8 +8,7 @@ import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 
 import { useNavigate } from "react-router-dom";
-import { Alert } from "@mui/material";
-import { Error } from "@mui/icons-material";
+
 import { Calendar } from "primereact/calendar";
 
 const CreatePost: React.FC<VoteSectionType> = ({
@@ -27,7 +26,6 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [date, setDate] = useState<Date | null>(null);
   const today = new Date();
   const maxDate = new Date(today.getFullYear(), 11, 31);
-  const [erros, setErros] = useState<string[]>([]);
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
 
@@ -73,7 +71,8 @@ const CreatePost: React.FC<VoteSectionType> = ({
         user_id: postV.data.user_id,
       });
 
-      setVoteSection([...voteSection, postV.data]);
+      if (setVoteSection && voteSection)
+        setVoteSection([...voteSection, postV.data]);
       setIsSuccess(true);
       navigate(`/vote/${postV.data.id}`);
     } catch (error) {
@@ -85,20 +84,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
 
   return (
     <div className=" max-w-5xl mx-auto">
-      <ul className="absolute top-10 right-[45%] z-30 space-y-2">
-        {erros &&
-          erros.map((item, index) => (
-            <li key={index}>
-              <Alert
-                className="animate-renderAnimation"
-                icon={<Error fontSize="inherit" />}
-                severity="error"
-              >
-                {item}
-              </Alert>
-            </li>
-          ))}
-      </ul>
+      <ul className="absolute top-10 right-[45%] z-30 space-y-2"></ul>
 
       <form
         className=" flex  flex-col  gap-7 text-white max-w-[1000px] relative"
@@ -139,8 +125,6 @@ const CreatePost: React.FC<VoteSectionType> = ({
           placeholder="Pressione enter para adicionar opcoes"
           setVoteOptions={setVoteOptions}
           voteOptions={voteOptions}
-          setErros={setErros}
-          erros={erros}
         />
 
         <Calendar
