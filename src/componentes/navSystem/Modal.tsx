@@ -32,7 +32,7 @@ const Modal: React.FC<PropType> = ({ setMiniModal }) => {
           onclickButton={() => {
             setMiniModal(false);
           }}
-          path="/CreatePost"
+          path="/criarPublicacao"
         >
           Create <FiPlus className=" w-5 h-5" />
         </ButtonProfileOptions>

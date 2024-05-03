@@ -117,7 +117,7 @@ function App() {
                 />
                 <Route path="/Profile/:id" element={<ProfilePage />} />
                 <Route
-                  path="/CreatePost"
+                  path="/criarPublicacao"
                   element={
                     <CreatePost
                       voteSection={voteSection}

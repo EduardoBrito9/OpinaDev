@@ -72,7 +72,7 @@ const CommentsComponent = () => {
                     alt=""
                   />
                   <div className="flex flex-col">
-                    <div className="flex gap-3 items-start">
+                    <div className="flex gap-3 max-h-6">
                       <p>{item.user_name}</p>
                       <p className="text-sm text-gray-400 ">
                         {formatarData(item.created_at)}

@@ -35,7 +35,7 @@ const ProfilePage = () => {
   }, [getPostsUser]);
 
   return (
-    <div className="w-full flex-1 ">
+    <div className="w-full flex flex-col flex-1 gap-4">
       <div className=" rounded-md border border-modalColor">
         <div className=" w-full">
           <table className="w-full caption-bottom text-sm">
@@ -56,7 +56,7 @@ const ProfilePage = () => {
                 <th className="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-[100px]"></th>
               </tr>
             </thead>
-            {postsUser ? (
+            {postsUser.length > 0 &&
               postsUser.map(
                 (item) =>
                   validateDataProfile(item) && (
@@ -114,14 +114,25 @@ const ProfilePage = () => {
                       </tr>
                     </tbody>
                   ),
-              )
-            ) : (
-              <tbody></tbody>
-            )}
+              )}
           </table>
           {modal && <ModalProfile currentPostId={currentPostId} />}
         </div>
       </div>
+      {!postsUser.length && (
+        <div className=" flex items-center justify-center flex-col gap-5">
+          <p>
+            Voce nao esta publicando nada ultimamente... Clique aqui para mudar
+            isso! 👇
+          </p>
+          <Link to='/criarPublicacao'>
+          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors bg-yellow-400 text-stone-800 hover:bg-yellow-500 h-10 px-4 py-2">
+            Create
+          </button>
+          </Link>
+      
+        </div>
+      )}
     </div>
   );
 };
