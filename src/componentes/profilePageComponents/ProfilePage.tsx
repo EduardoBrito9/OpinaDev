@@ -32,7 +32,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     getPostsUser();
-  }, [getPostsUser]);
+  }, [getPostsUser, modal]);
 
   return (
     <div className="w-full flex flex-col flex-1 gap-4">
@@ -116,7 +116,7 @@ const ProfilePage = () => {
                   ),
               )}
           </table>
-          {modal && <ModalProfile currentPostId={currentPostId} />}
+          {modal && <ModalProfile currentPostId={currentPostId} setModal={setModal}/>}
         </div>
       </div>
       {!postsUser.length && (
@@ -126,7 +126,7 @@ const ProfilePage = () => {
             isso! 👇
           </p>
           <Link to='/criarPublicacao'>
-          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors bg-yellow-400 text-stone-800 hover:bg-yellow-500 h-10 px-4 py-2">
+          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition bg-yellow-400 text-stone-800 hover:bg-yellow-500 h-10 px-4 py-2">
             Create
           </button>
           </Link>

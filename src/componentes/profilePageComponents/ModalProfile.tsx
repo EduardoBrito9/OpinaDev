@@ -7,9 +7,10 @@ import { supabase } from "../../lib/helper/supabaseClient";
 import { Alert } from "@mui/material";
 import { Check } from "@mui/icons-material";
 
-const ModalProfile: React.FC<{ currentPostId: string }> = ({
-  currentPostId,
-}) => {
+const ModalProfile: React.FC<{
+  currentPostId: string,
+  setModal: (modal: boolean) => void;
+}> = ({ currentPostId, setModal }) => {
   const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -21,6 +22,7 @@ const ModalProfile: React.FC<{ currentPostId: string }> = ({
     } catch (e) {
       console.log(e);
     } finally {
+      setModal(false)
       setLoading(false);
     }
   };
@@ -28,7 +30,11 @@ const ModalProfile: React.FC<{ currentPostId: string }> = ({
   return (
     <section>
       {loading && (
-        <Alert className="absolute right-[37%] top-10 block" icon={<Check fontSize="inherit" />} severity="info">
+        <Alert
+          className="absolute right-[37%] top-10 block"
+          icon={<Check fontSize="inherit" />}
+          severity="info"
+        >
           Here is a gentle confirmation that your action was successful.
         </Alert>
       )}

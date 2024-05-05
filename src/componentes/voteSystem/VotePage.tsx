@@ -14,7 +14,7 @@ import {
 import useMyContext from "../../context/functionContext";
 import CommentsComponent from "../comments/CommentsComponent";
 
-import { differenceInSeconds } from "date-fns";
+// import { differenceInSeconds } from "date-fns";
 
 const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
   const { user } = useMyContext();
@@ -42,43 +42,45 @@ const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
     }
   }, [id, setVotePost]);
 
-  const dateDistance = useCallback(() => {
-    let timeoutID;
-    if (typeof votePost.endDate === "string") {
-      const dateNOW = new Date();
-      const end = new Date(votePost.endDate.substring(0, 10));
-      const difference = differenceInSeconds(end, dateNOW);
-      const dias = Math.floor(difference / (3600 * 24));
-      const horas = Math.floor((difference % (3600 * 24)) / 3600);
-      const minutos = Math.floor((difference % 3600) / 60);
-      const segundos = difference % 60;
-      setDays(dias);
-      setHours(horas);
-      setMinutes(minutos);
-      setSecond(segundos);
-      timeoutID = setTimeout(() => {
-        dateDistance();
-      }, 1000);
-      if (
-        index !== undefined &&
-        votePastSection &&
-        votePost &&
-        validateDataProfile(votePastSection[index]) &&
-        validateDataProfile(votePost) &&
-        votePastSection[index].id === votePost.id
-      ) {
-        setDays(0)
-        setHours(0);
-        setMinutes(0);
-        setSecond(0);
-        clearTimeout(timeoutID);
-      } else {
-        timeoutID = setTimeout(() => {
-          dateDistance();
-        }, 1000);
-      }
-    }
-  }, [votePost, votePastSection, index]);
+  //I NEED TO SET A MAX NUMBER TO FIX THAT BUG OF SETTIMEOUT
+
+  // const dateDistance = useCallback(() => {
+  //   let timeoutID;
+  //   if (typeof votePost.endDate === "string") {
+  //     const dateNOW = new Date();
+  //     const end = new Date(votePost.endDate.substring(0, 10));
+  //     const difference = differenceInSeconds(end, dateNOW);
+  //     const dias = Math.floor(difference / (3600 * 24));
+  //     const horas = Math.floor((difference % (3600 * 24)) / 3600);
+  //     const minutos = Math.floor((difference % 3600) / 60);
+  //     const segundos = difference % 60;
+  //     setDays(dias);
+  //     setHours(horas);
+  //     setMinutes(minutos);
+  //     setSecond(segundos);
+  //     timeoutID = setTimeout(() => {
+  //       dateDistance();
+  //     }, 1000);
+  //     if (
+  //       index !== undefined &&
+  //       votePastSection &&
+  //       votePost &&
+  //       validateDataProfile(votePastSection[index]) &&
+  //       validateDataProfile(votePost) &&
+  //       votePastSection[index].id === votePost.id
+  //     ) {
+  //       setDays(0)
+  //       setHours(0);
+  //       setMinutes(0);
+  //       setSecond(0);
+  //       clearTimeout(timeoutID);
+  //     } else {
+  //       timeoutID = setTimeout(() => {
+  //         dateDistance();
+  //       }, 1000);
+  //     }
+  //   }
+  // }, [votePost, votePastSection, index]);
 
   useEffect(() => {
     getVotePost();
@@ -93,8 +95,8 @@ const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
       setVoteTable(data[0].users_already_voted);
       setTableNumber(data[0]);
     }
-    dateDistance();
-  }, [id, dateDistance]);
+    // dateDistance();
+  }, [id]);
 
   useEffect(() => {
     getVoteTable();

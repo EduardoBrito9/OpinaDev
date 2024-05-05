@@ -6,10 +6,9 @@ import { VoteSectionType } from "../../types/propsTypes/typesProps";
 import InputElement from "../elements/InputElement";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
-
 import { useNavigate } from "react-router-dom";
-
 import { Calendar } from "primereact/calendar";
+
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -19,7 +18,6 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [voteOptions, setVoteOptions] = useState<string[]>([]);
-  // const [isDisabled, setIsDisabled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
@@ -128,7 +126,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
         />
 
         <Calendar
-          className="bg-black z-10 py-3 px-4 border p-calendar-green border-modalColor rounded text-sm text-black outline-none focus:border-orange-500 focus:border-opacity-50  w-72"
+          className="bg-black z-10 py-3 px-4 border border-modalColor rounded text-sm text-black outline-none focus:border-orange-500 focus:border-opacity-50  w-72"
           placeholder="Escolha uma data"
           value={date}
           onChange={(e) => setDate(e.value as Date)}
@@ -138,6 +136,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           maxDate={maxDate}
           readOnlyInput
           showButtonBar
+         
         />
 
         <button
