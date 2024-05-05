@@ -7,8 +7,7 @@ import InputElement from "../elements/InputElement";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 import { useNavigate } from "react-router-dom";
-import { Calendar } from "primereact/calendar";
-
+import { DayPicker } from "react-day-picker";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -21,9 +20,10 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
-  const [date, setDate] = useState<Date | null>(null);
   const today = new Date();
-  const maxDate = new Date(today.getFullYear(), 11, 31);
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(today);
+  // const today = new Date();
+  // const maxDate = new Date(today.getFullYear(), 11, 31);
 
   // VoteDataEffect({ title, description, voteOptions, endDate });
 
@@ -125,18 +125,11 @@ const CreatePost: React.FC<VoteSectionType> = ({
           voteOptions={voteOptions}
         />
 
-        <Calendar
-          className="bg-black z-10 py-3 px-4 border border-modalColor rounded text-sm text-black outline-none focus:border-orange-500 focus:border-opacity-50  w-72"
-          placeholder="Escolha uma data"
-          value={date}
-          onChange={(e) => setDate(e.value as Date)}
-          dateFormat="M dd, yy"
-          showIcon
-          minDate={today}
-          maxDate={maxDate}
-          readOnlyInput
-          showButtonBar
-         
+        <DayPicker
+          mode="single"
+          required
+          selected={selectedDay}
+          onSelect={setSelectedDay}
         />
 
         <button

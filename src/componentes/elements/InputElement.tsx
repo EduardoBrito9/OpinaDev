@@ -13,6 +13,7 @@ const Input: React.FC<InputType> = ({ type, onChange, id, name, value, placehold
         id={id}
         name={name}
         value={value}
+        autoComplete="off"
       />
     </>
   );

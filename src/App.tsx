@@ -4,7 +4,6 @@ import Nav from "./componentes/navSystem/Nav";
 import { MyContextProvider } from "./context/Context";
 import { useCallback, useEffect, useRef, useState } from "react";
 import CreatePost from "./componentes/voteSystem/CreatePost";
-import { PrimeReactProvider } from "primereact/api";
 import HomePage from "./componentes/HomePage";
 import { VoteTypeStructure } from "./types/propsTypes/typesProps";
 import ProfilePage from "./componentes/profilePageComponents/ProfilePage";
@@ -90,7 +89,6 @@ function App() {
   }, [votosExpirados]);
 
   return (
-    <PrimeReactProvider>
       <MyContextProvider>
         <BrowserRouter>
           <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-16 p-5 ">
@@ -137,7 +135,6 @@ function App() {
           </main>
         </BrowserRouter>
       </MyContextProvider>
-    </PrimeReactProvider>
   );
 }
 
