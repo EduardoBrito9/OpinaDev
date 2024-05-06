@@ -8,6 +8,7 @@ import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 import { useNavigate } from "react-router-dom";
 import { DayPicker } from "react-day-picker";
+import { format } from "date-fns";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -21,11 +22,11 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
   const today = new Date();
-  const [selectedDay, setSelectedDay] = useState<Date | undefined>(today);
-  // const today = new Date();
-  // const maxDate = new Date(today.getFullYear(), 11, 31);
-
-  // VoteDataEffect({ title, description, voteOptions, endDate });
+  const [date, setDate] = useState<Date | undefined>(today);
+  let formattedDate;
+  if (date) {
+    formattedDate = format(date, "PP");
+  }
 
   //function para adicionar post de voto
   const postVerification = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -79,6 +80,21 @@ const CreatePost: React.FC<VoteSectionType> = ({
       setIsLoading(false);
     }
   };
+  const css = `
+  .my-selected:not([disabled]) { 
+    font-weight: bold; 
+    border: 2px solid currentColor;
+  }
+  .my-selected:hover:not([disabled]) { 
+    border-color: blue;
+    color: blue;
+  }
+  .my-today { 
+    font-weight: bold;
+    font-size: 140%; 
+    color: red;
+  }
+`;
 
   return (
     <div className=" max-w-5xl mx-auto">
@@ -124,12 +140,30 @@ const CreatePost: React.FC<VoteSectionType> = ({
           setVoteOptions={setVoteOptions}
           voteOptions={voteOptions}
         />
+        <InputElement
+          placeholder="(opcional) descricao da votacao"
+          value={formattedDate}
+          type="text"
+          id="Data de encerramento"
+          name="Data de encerramento"
+        />
 
+        <style>{css}</style>
         <DayPicker
           mode="single"
           required
-          selected={selectedDay}
-          onSelect={setSelectedDay}
+          selected={date}
+          onSelect={setDate}
+          showOutsideDays
+          fixedWeeks
+          className="w-[400px]"
+          modifiersClassNames={{
+            selected: "my-selected",
+            today: "my-today",
+          }}
+          modifiersStyles={{
+            disabled: { fontSize: "75%" },
+          }}
         />
 
         <button

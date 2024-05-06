@@ -20,7 +20,7 @@ export interface InputType {
   onChange?: ({ target }: { target: HTMLInputElement }) => void;
   id?: string;
   name?: string;
-  value: string;
+  value?: string;
   placeholder: string;
 }
 

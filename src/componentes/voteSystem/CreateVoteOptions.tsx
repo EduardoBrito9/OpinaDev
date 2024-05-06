@@ -38,7 +38,7 @@ const VoteOptionsElement: React.FC<VoteStateType> = ({
     }
   };
   return (
-    <div className=" flex flex-col gap-5 ">
+    <div className=" flex flex-col gap-4 ">
       <div className=" flex flex-col gap-1">
         <label htmlFor="vOption" className=" text-lg font-bold">
           Opcoes de voto
