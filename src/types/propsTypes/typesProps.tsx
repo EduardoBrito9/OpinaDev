@@ -46,9 +46,9 @@ export interface VoteSectionType {
   setVoteSection?: (voteSection: VoteTypeStructure[]) => void;
   votePastSection?: VoteTypeStructure[];
   index?: number;
-  setIndex?: (index: number) => void
+  setIndex?: (index: number) => void;
   setVotePastSection?: (votePastSection: VoteTypeStructure[]) => void;
-  loadingPost?: boolean
+  loadingPost?: boolean;
 }
 
 export interface VoteDataType {
@@ -87,4 +87,11 @@ export interface CommentsDataType {
 
 export interface CommentsArray {
   data: CommentsDataType[];
+}
+
+//create vote calendar
+
+export interface DateStates {
+  date: Date | undefined;
+  setDate: (date: Date | undefined) => void;
 }

@@ -7,8 +7,8 @@ import InputElement from "../elements/InputElement";
 import AlertPostLoading from "../loadingSystem/AlertPostLoading";
 import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 import { useNavigate } from "react-router-dom";
-import { DayPicker } from "react-day-picker";
 import { format } from "date-fns";
+import CalendarVote from "./CalendarVote";
 
 const CreatePost: React.FC<VoteSectionType> = ({
   voteSection,
@@ -80,21 +80,6 @@ const CreatePost: React.FC<VoteSectionType> = ({
       setIsLoading(false);
     }
   };
-  const css = `
-  .my-selected:not([disabled]) { 
-    font-weight: bold; 
-    border: 2px solid currentColor;
-  }
-  .my-selected:hover:not([disabled]) { 
-    border-color: blue;
-    color: blue;
-  }
-  .my-today { 
-    font-weight: bold;
-    font-size: 140%; 
-    color: red;
-  }
-`;
 
   return (
     <div className=" max-w-5xl mx-auto">
@@ -148,23 +133,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
           name="Data de encerramento"
         />
 
-        <style>{css}</style>
-        <DayPicker
-          mode="single"
-          required
-          selected={date}
-          onSelect={setDate}
-          showOutsideDays
-          fixedWeeks
-          className="w-[400px]"
-          modifiersClassNames={{
-            selected: "my-selected",
-            today: "my-today",
-          }}
-          modifiersStyles={{
-            disabled: { fontSize: "75%" },
-          }}
-        />
+         
+          <CalendarVote date={date} setDate={setDate} />
+        
 
         <button
           className={`bg-orange-600 py-2 rounded ${
