@@ -11,7 +11,7 @@ import { validateDataPostType } from "./validateFunctions/validateDataType";
 import { supabase } from "./lib/helper/supabaseClient";
 import VotePage from "./componentes/voteSystem/VotePage";
 import Footer from "./componentes/Footer";
-import { differenceInSeconds } from "date-fns";
+import { isAfter } from "date-fns";
 
 function App() {
   const [voteSection, setVoteSection] = useState<VoteTypeStructure[]>([]);
@@ -72,13 +72,7 @@ function App() {
       const expiredVotes = voteSection.filter((item) => {
         const dateNOW = new Date();
         const end = new Date(item.endDate.substring(0, 10));
-        const difference = differenceInSeconds(end, dateNOW);
-        const dias = Math.floor(difference / (3600 * 24));
-        const horas = Math.floor((difference % (3600 * 24)) / 3600);
-        const minutos = Math.floor((difference % 3600) / 60);
-        const segundos = difference % 60;
-        console.log(horas, minutos, segundos);
-        return dias <= 0 && horas <= 0 && minutos <= 0 && segundos <= 0;
+        return isAfter(dateNOW, end);
       });
       if (setVotePastSection) setVotePastSection(expiredVotes);
     }
@@ -89,52 +83,52 @@ function App() {
   }, [votosExpirados]);
 
   return (
-      <MyContextProvider>
-        <BrowserRouter>
-          <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-16 p-5 ">
-            <Nav
-              modalRef={modalRef}
-              miniModal={miniModal}
-              setMiniModal={setMiniModal}
-            />
-            <div className=" w-full flex-1">
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    <HomePage
-                      setVoteSection={setVoteSection}
-                      voteSection={voteSection}
-                      votePastSection={votePastSection}
-                      setVotePastSection={setVotePastSection}
-                      loadingPost={loadingPost}
-                      index={index}
-                      setIndex={setIndex}
-                    />
-                  }
-                />
-                <Route path="/Profile/:id" element={<ProfilePage />} />
-                <Route
-                  path="/criarPublicacao"
-                  element={
-                    <CreatePost
-                      voteSection={voteSection}
-                      setVoteSection={setVoteSection}
-                    />
-                  }
-                />
-                <Route
-                  path="/vote/:id"
-                  element={
-                    <VotePage votePastSection={votePastSection} index={index} />
-                  }
-                />
-              </Routes>
-            </div>
-            <Footer />
-          </main>
-        </BrowserRouter>
-      </MyContextProvider>
+    <MyContextProvider>
+      <BrowserRouter>
+        <main className="flex flex-col max-w-7xl mx-auto min-h-screen space-y-16 p-5 ">
+          <Nav
+            modalRef={modalRef}
+            miniModal={miniModal}
+            setMiniModal={setMiniModal}
+          />
+          <div className=" w-full flex-1">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <HomePage
+                    setVoteSection={setVoteSection}
+                    voteSection={voteSection}
+                    votePastSection={votePastSection}
+                    setVotePastSection={setVotePastSection}
+                    loadingPost={loadingPost}
+                    index={index}
+                    setIndex={setIndex}
+                  />
+                }
+              />
+              <Route path="/Profile/:id" element={<ProfilePage />} />
+              <Route
+                path="/criarPublicacao"
+                element={
+                  <CreatePost
+                    voteSection={voteSection}
+                    setVoteSection={setVoteSection}
+                  />
+                }
+              />
+              <Route
+                path="/vote/:id"
+                element={
+                  <VotePage votePastSection={votePastSection} index={index} />
+                }
+              />
+            </Routes>
+          </div>
+          <Footer />
+        </main>
+      </BrowserRouter>
+    </MyContextProvider>
   );
 }
 

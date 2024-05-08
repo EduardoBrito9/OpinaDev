@@ -1,5 +1,6 @@
 import { DayPicker } from "react-day-picker";
 import { DateStates } from "../../types/propsTypes/typesProps";
+import { addDays, isAfter, isBefore, startOfDay } from "date-fns";
 
 const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
   const css = `
@@ -40,6 +41,13 @@ const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
   }
   
 `;
+  const dataMinima = new Date();
+  const maxDate = addDays(dataMinima, 6);
+  const isDayDisabled = (day: Date) => {
+    return (
+      isBefore(startOfDay(day), startOfDay(dataMinima)) || isAfter(day, maxDate)
+    );
+  };
   return (
     <div>
       <style>{css}</style>
@@ -57,6 +65,7 @@ const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
         modifiersStyles={{
           disabled: { fontSize: "75%" },
         }}
+        disabled={isDayDisabled}
       />
     </div>
   );

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { supabase } from "../../lib/helper/supabaseClient";
 import {
   validateDataPostType,
-  validateDataProfile,
   validateDataVoteTableType,
   validateVoteOptionUser,
 } from "../../validateFunctions/validateDataType";
@@ -14,15 +13,10 @@ import {
 import useMyContext from "../../context/functionContext";
 import CommentsComponent from "../comments/CommentsComponent";
 
-// import { differenceInSeconds } from "date-fns";
-
-const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
+const VotePage: React.FC<VoteSectionType> = () => {
   const { user } = useMyContext();
   const { id } = useParams();
-  const [days, setDays] = useState<number>();
-  const [hours, setHours] = useState<number>();
-  const [minutes, setMinutes] = useState<number>();
-  const [second, setSecond] = useState<number>();
+
   const [votePost, setVotePost] = useState<VoteTypeStructure>(
     {} as VoteTypeStructure,
   );
@@ -41,46 +35,6 @@ const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
       console.log("error");
     }
   }, [id, setVotePost]);
-
-  //I NEED TO SET A MAX NUMBER TO FIX THAT BUG OF SETTIMEOUT
-
-  // const dateDistance = useCallback(() => {
-  //   let timeoutID;
-  //   if (typeof votePost.endDate === "string") {
-  //     const dateNOW = new Date();
-  //     const end = new Date(votePost.endDate.substring(0, 10));
-  //     const difference = differenceInSeconds(end, dateNOW);
-  //     const dias = Math.floor(difference / (3600 * 24));
-  //     const horas = Math.floor((difference % (3600 * 24)) / 3600);
-  //     const minutos = Math.floor((difference % 3600) / 60);
-  //     const segundos = difference % 60;
-  //     setDays(dias);
-  //     setHours(horas);
-  //     setMinutes(minutos);
-  //     setSecond(segundos);
-  //     timeoutID = setTimeout(() => {
-  //       dateDistance();
-  //     }, 1000);
-  //     if (
-  //       index !== undefined &&
-  //       votePastSection &&
-  //       votePost &&
-  //       validateDataProfile(votePastSection[index]) &&
-  //       validateDataProfile(votePost) &&
-  //       votePastSection[index].id === votePost.id
-  //     ) {
-  //       setDays(0)
-  //       setHours(0);
-  //       setMinutes(0);
-  //       setSecond(0);
-  //       clearTimeout(timeoutID);
-  //     } else {
-  //       timeoutID = setTimeout(() => {
-  //         dateDistance();
-  //       }, 1000);
-  //     }
-  //   }
-  // }, [votePost, votePastSection, index]);
 
   useEffect(() => {
     getVotePost();
@@ -141,10 +95,10 @@ const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
               clipRule="evenodd"
             ></path>
           </svg>
-          <span>{days}D:</span>
-          <span>{hours}H:</span>
-          <span>{minutes}M:</span>
-          <span>{second}S</span>
+          <span>D:</span>
+          <span>H:</span>
+          <span>M:</span>
+          <span>S</span>
         </div>
       </div>
 
@@ -194,7 +148,7 @@ const VotePage: React.FC<VoteSectionType> = ({ votePastSection, index }) => {
                     "option" + (index + 1),
                   ) && (
                     <div
-                      key={index}
+                      key={item}
                       className={`text-white flex items-center gap-3`}
                     >
                       <div

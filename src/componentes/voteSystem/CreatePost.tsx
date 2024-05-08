@@ -126,6 +126,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
           voteOptions={voteOptions}
         />
         <InputElement
+          onChange={() => {
+            console.log("nothing");
+          }}
           placeholder="(opcional) descricao da votacao"
           value={formattedDate}
           type="text"
@@ -133,9 +136,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           name="Data de encerramento"
         />
 
-         
-          <CalendarVote date={date} setDate={setDate} />
-        
+        <CalendarVote date={date} setDate={setDate} />
 
         <button
           className={`bg-orange-600 py-2 rounded ${
