@@ -62,17 +62,14 @@ const CommentsComponent = () => {
           <div className=" flex flex-col gap-4">
             {comments &&
               comments.map((item) => (
-                <div
-                  key={item.id}
-                  className=" w-[500px] flex gap-2 mb-5"
-                >
+                <div key={item.id} className=" w-full flex space-x-5 mb-5 relative">
                   <img
-                    className="rounded-full border border-indigo-600 h-16 w-16 overflow-hidden"
+                    className="rounded-full border border-indigo-600 size-16 overflow-hidden"
                     src={item.url}
                     alt=""
                   />
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-3 max-h-6">
+                  <div className="flex flex-col w-full">
+                    <div className="flex items-center space-x-5 max-h-6 w-full">
                       <p className=" font-bold">{item.user_name}</p>
                       <p className="text-sm text-gray-400 ">
                         {formatarData(item.created_at)}
@@ -84,7 +81,7 @@ const CommentsComponent = () => {
                             setCommentId(item.id);
                             setModalComment(!modalComment);
                           }}
-                          className="inline-flex items-center justify-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
+                          className="inline-flex items-center justify-end justify-self-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
                           type="button"
                           aria-haspopup="dialog"
                           aria-expanded="false"
@@ -109,22 +106,24 @@ const CommentsComponent = () => {
                             <circle cx="5" cy="12" r="1"></circle>
                           </svg>
                         </button>
+                      )}{" "}
+                      {modalComment && commentId && (
+                        <ModalComment
+                          commentId={commentId}
+                          commentValue={commentValue}
+                          getComments={getComments}
+                          setModalComment={setModalComment}
+                        />
                       )}
                     </div>
-                    <span className=" text-stone-100 text-base">{item.commentsColumn} </span>
+                    <span className=" text-stone-100 text-base">
+                      {item.commentsColumn}{" "}
+                    </span>
                   </div>
                 </div>
               ))}
           </div>
         </div>
-
-        {modalComment && commentId && (
-          <ModalComment
-            commentId={commentId}
-            commentValue={commentValue}
-            getComments={getComments}
-          />
-        )}
       </section>
     </section>
   );
