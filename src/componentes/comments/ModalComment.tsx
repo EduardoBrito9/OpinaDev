@@ -20,19 +20,22 @@ const ModalComment: React.FC<{
 
   const editComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await supabase
-      .from("comments")
-      .update({
-        commentsColumn: commentEdit,
-      })
-      .eq("id", commentId);
-    setCommentEdit("");
-    setEditing(false);
-    getComments();
+    if (commentEdit.length > 0) {
+      await supabase
+        .from("comments")
+        .update({
+          commentsColumn: commentEdit,
+        })
+        .eq("id", commentId);
+      setCommentEdit("");
+      setModalComment(false);
+      setEditing(false);
+      getComments();
+    }
   };
 
   return (
-    <section >
+    <section>
       {!editing && (
         <div className=" z-40 bg-black  animate-renderAnimationModal absolute space-y-4 top-20 right-1 border border-modalColor py-4 px-5 rounded-md w-[220px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
           <div>
@@ -56,8 +59,12 @@ const ModalComment: React.FC<{
         <div className="fixed inset-0 flex items-center justify-center backdrop-filter backdrop-blur-sm">
           <div className=" flex flex-col gap-5 bg-black  border border-modalColor p-7 animate-renderAnimationModal ">
             <form className="flex flex-col gap-5 " onSubmit={editComment}>
-              <label htmlFor="edit">Edit</label>
-              <span>Edite seu comentario</span>
+              <label htmlFor="edit" className="font-bold">
+                Edit
+              </label>
+              <span className="text-stone-400 text-sm">
+                Edite seu comentario.
+              </span>
               <input
                 autoComplete="off"
                 type="text"
@@ -80,10 +87,7 @@ const ModalComment: React.FC<{
               >
                 Cancelar
               </button>
-              <button
-                // onClick={editComment}
-                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition bg-yellow-400 text-stone-800 hover:bg-yellow-500 h-10 px-4 py-2"
-              >
+              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition bg-yellow-400 text-stone-800 hover:bg-yellow-500 h-10 px-4 py-2">
                 Continuar
               </button>
             </div>
