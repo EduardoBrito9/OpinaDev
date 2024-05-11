@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import InputElement from "../elements/InputElement";
 import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
@@ -16,6 +16,7 @@ const CommentsComponent = () => {
   const [comments, setComments] = useState<CommentsDataType[]>([]);
   const [modalComment, setModalComment] = useState(false);
   const [commentValue, setCommentValue] = useState("");
+  const ref = useRef<HTMLDivElement>(null);
 
   const postComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,6 +45,12 @@ const CommentsComponent = () => {
     getComments();
   }, [getComments]);
 
+  // const outsideClick = (event: Event) => {
+  //   if(event.target !== ref.current) {
+  //     console.log(ref.current)
+  //   }
+  // };
+
   return (
     <section className="w-full max-w-[600px] space-y-6 overflow-hidden ">
       <h1 className=" text-3xl font-medium">Comentarios em tempo real 😉</h1>
@@ -64,7 +71,9 @@ const CommentsComponent = () => {
               comments.map((item) => (
                 <div
                   key={item.id}
-                  className=" w-full flex space-x-5 mb-5 relative"
+                  className={`w-full flex space-x-5 mb-5 relative ${
+                    item.id === commentId ? "z-30" : "z-10"
+                  }`}
                 >
                   <img
                     className="rounded-full border border-indigo-600 size-16"
@@ -80,11 +89,15 @@ const CommentsComponent = () => {
                       {item.user_id === user.id && (
                         <button
                           onClick={() => {
-                            setCommentValue(item.commentsColumn);
-                            setCommentId(item.id);
-                            setModalComment(!modalComment);
+                            if (item.id !== commentId) {
+                              setModalComment(true);
+                              setCommentValue(item.commentsColumn);
+                              setCommentId(item.id);
+                            } else {
+                              setModalComment(!modalComment);
+                            }
                           }}
-                          className="inline-flex items-center justify-end justify-self-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-[170px] p-0 pr-5"
+                          className="inline-flex items-center justify-end justify-self-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-[190px] p-0 pr-5"
                           type="button"
                           aria-haspopup="dialog"
                           aria-expanded="false"
@@ -110,7 +123,7 @@ const CommentsComponent = () => {
                           </svg>
                         </button>
                       )}
-                      {modalComment && commentId && (
+                      {modalComment && commentId === item.id && (
                         <ModalComment
                           commentId={commentId}
                           commentValue={commentValue}

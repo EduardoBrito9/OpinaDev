@@ -13,14 +13,14 @@ const ButtonProfileOptions: React.FC<ButtonType> = ({
         <Link
           onClick={onclickButton}
           to={`${path}`}
-          className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
+          className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor rounded-md  transition"
         >
           {children}
         </Link>
       ) : (
         <button
           onClick={onclickButton}
-          className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor transition"
+          className=" py-3 px-4 flex justify-between items-center w-full hover:bg-modalColor rounded-md transition"
         >
           {children}
         </button>

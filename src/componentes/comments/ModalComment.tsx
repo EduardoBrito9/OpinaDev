@@ -37,7 +37,7 @@ const ModalComment: React.FC<{
   return (
     <section>
       {!editing && (
-        <div className=" z-40 bg-black  animate-renderAnimationModal absolute space-y-4 top-20 right-1 border border-modalColor py-4 px-5 rounded-md w-[220px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
+        <div className=" z-400 bg-black  animate-renderAnimationModal absolute top-7 right-11 border border-modalColor py-2 px-4 rounded-md w-[180px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
           <div>
             <ButtonProfileOptions onclickButton={deleteComment}>
               Delete <FiTrash className=" w-4 h-4" />
