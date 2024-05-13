@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import ButtonProfileOptions from "../elements/ButtonProfileOptions";
 import { FiTrash } from "react-icons/fi";
 import { RxPencil1 } from "react-icons/rx";
@@ -8,11 +8,20 @@ const ModalComment: React.FC<{
   commentId: number;
   commentValue: string;
   getComments: () => void;
+  modalComment: boolean;
   setModalComment: (modalComment: boolean) => void;
-}> = ({ commentId, commentValue, getComments, setModalComment }) => {
+  openMenuButton: React.MutableRefObject<HTMLButtonElement | null>;
+}> = ({
+  commentId,
+  commentValue,
+  getComments,
+  setModalComment,
+  modalComment,
+  openMenuButton,
+}) => {
   const [commentEdit, setCommentEdit] = useState(commentValue);
   const [editing, setEditing] = useState(false);
-
+  const modalRef = useRef<HTMLDivElement>(null);
   const deleteComment = async () => {
     await supabase.from("comments").delete().eq("id", commentId);
     getComments();
@@ -34,10 +43,43 @@ const ModalComment: React.FC<{
     }
   };
 
+  const outsideClick = useCallback(() => {
+    setModalComment(false);
+  }, [setModalComment]);
+
+  useEffect(() => {
+    const handleClickOutside = ({ target }: MouseEvent) => {
+      if (
+        modalComment &&
+        modalRef.current &&
+        openMenuButton &&
+        target &&
+        target !== modalRef.current &&
+        !modalRef.current.contains(target as Node) &&
+        target !== openMenuButton.current &&
+        !openMenuButton.current?.contains(target as Node)
+      ) {
+        console.log(target);
+        outsideClick();
+      }
+    };
+
+    if (modalComment) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [modalComment, openMenuButton]);
+
   return (
     <section>
       {!editing && (
-        <div className=" z-400 bg-black  animate-renderAnimationModal absolute top-7 right-11 border border-modalColor py-2 px-4 rounded-md w-[180px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
+        <div
+          ref={modalRef}
+          className=" z-400 bg-black  animate-renderAnimationModal absolute top-7 right-11 border border-modalColor py-2 px-4 rounded-md w-[180px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all"
+        >
           <div>
             <ButtonProfileOptions onclickButton={deleteComment}>
               Delete <FiTrash className=" w-4 h-4" />

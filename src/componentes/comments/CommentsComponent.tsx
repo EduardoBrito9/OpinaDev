@@ -16,7 +16,7 @@ const CommentsComponent = () => {
   const [comments, setComments] = useState<CommentsDataType[]>([]);
   const [modalComment, setModalComment] = useState(false);
   const [commentValue, setCommentValue] = useState("");
-  const ref = useRef<HTMLDivElement>(null);
+  const openMenuButton = useRef<HTMLButtonElement>(null);
 
   const postComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,12 +44,6 @@ const CommentsComponent = () => {
   useEffect(() => {
     getComments();
   }, [getComments]);
-
-  // const outsideClick = (event: Event) => {
-  //   if(event.target !== ref.current) {
-  //     console.log(ref.current)
-  //   }
-  // };
 
   return (
     <section className="w-full max-w-[600px] space-y-6 overflow-hidden ">
@@ -88,6 +82,7 @@ const CommentsComponent = () => {
                       </p>
                       {item.user_id === user.id && (
                         <button
+                          ref={openMenuButton}
                           onClick={() => {
                             if (item.id !== commentId) {
                               setModalComment(true);
@@ -129,6 +124,8 @@ const CommentsComponent = () => {
                           commentValue={commentValue}
                           getComments={getComments}
                           setModalComment={setModalComment}
+                          modalComment={modalComment}
+                         openMenuButton={openMenuButton}
                         />
                       )}
                     </div>
