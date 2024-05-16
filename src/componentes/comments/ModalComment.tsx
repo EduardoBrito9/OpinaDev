@@ -49,17 +49,18 @@ const ModalComment: React.FC<{
 
   useEffect(() => {
     const handleClickOutside = ({ target }: MouseEvent) => {
+      const targetTest = target as HTMLElement;
       if (
         modalComment &&
         modalRef.current &&
         openMenuButton &&
-        target &&
-        target !== modalRef.current &&
-        !modalRef.current.contains(target as Node) &&
-        target !== openMenuButton.current &&
-        !openMenuButton.current?.contains(target as Node)
+        targetTest &&
+        targetTest !== modalRef.current &&
+        !modalRef.current.contains(targetTest as Node) &&
+        targetTest !== openMenuButton.current &&
+        !openMenuButton.current?.contains(targetTest as Node) &&
+        targetTest.namespaceURI !== 'http://www.w3.org/2000/svg'
       ) {
-        console.log(target);
         outsideClick();
       }
     };
@@ -71,7 +72,7 @@ const ModalComment: React.FC<{
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [modalComment, openMenuButton]);
+  }, [modalComment, openMenuButton, outsideClick]);
 
   return (
     <section>

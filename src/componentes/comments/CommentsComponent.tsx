@@ -75,9 +75,9 @@ const CommentsComponent = () => {
                     alt=""
                   />
                   <div className="flex flex-col w-full">
-                    <div className="flex items-center space-x-5 max-h-6 w-full">
+                    <div className="flex items-center space-x-5 max-h-6 w-[450px]">
                       <p className=" font-bold w-fit">{item.user_name}</p>
-                      <p className="text-sm text-gray-400 ">
+                      <p className="text-sm text-gray-400 w-[150px] ">
                         {formatarData(item.created_at)}
                       </p>
                       {item.user_id === user.id && (
@@ -85,14 +85,16 @@ const CommentsComponent = () => {
                           ref={openMenuButton}
                           onClick={() => {
                             if (item.id !== commentId) {
+                              console.log(item.id, commentId)
                               setModalComment(true);
                               setCommentValue(item.commentsColumn);
                               setCommentId(item.id);
                             } else {
+                              console.log(item.id, commentId)
                               setModalComment(!modalComment);
                             }
                           }}
-                          className="inline-flex items-center justify-end justify-self-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-[190px] p-0 pr-5"
+                          className="inline-flex items-center justify-end justify-self-end whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 p-0 w-[100px]"
                           type="button"
                           aria-haspopup="dialog"
                           aria-expanded="false"
