@@ -18,6 +18,12 @@ const CommentsComponent = () => {
   const [commentValue, setCommentValue] = useState("");
   const openMenuButton = useRef<HTMLButtonElement>(null);
 
+  const orderedComments = comments.sort((a, b) => {
+    const itemA = new Date(a.created_at);
+    const itemB = new Date(b.created_at);
+    return itemA - itemB;
+  })
+
   const postComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     await supabase.from("comments").insert({
@@ -123,6 +129,7 @@ const CommentsComponent = () => {
                       {modalComment && commentId === item.id && (
                         <ModalComment
                           commentId={commentId}
+                          setCommentValue={setCommentValue}
                           commentValue={commentValue}
                           getComments={getComments}
                           setModalComment={setModalComment}
