@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { VoteSectionType } from "../../types/propsTypes/typesProps";
 import { supabase } from "../../lib/helper/supabaseClient";
 import {
@@ -13,6 +13,7 @@ const ProfilePage = () => {
   const [postsUser, setPostsUser] = useState<VoteSectionType[]>([]);
   const [modal, setModal] = useState(false);
   const [currentPostId, setCurrentPostId] = useState("");
+  const openMenuButton = useRef<HTMLButtonElement>(null);
   const { id } = useParams();
 
   const getPostsUser = useCallback(async () => {
@@ -62,7 +63,7 @@ const ProfilePage = () => {
                   validateDataProfile(item) && (
                     <tbody
                       key={item.id}
-                      className="[&amp;_tr:last-child]:border-0"
+                      className="[&amp;_tr:last-child]:border-0 relative"
                     >
                       <tr className="border border-modalColor transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
@@ -82,8 +83,10 @@ const ProfilePage = () => {
                         <td className=" relative p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">
                           <button
                             onClick={() => {
-                              setModal(!modal);
-                              setCurrentPostId(item.id);
+                              if (item.id !== currentPostId) {
+                                setModal(true);
+                                setCurrentPostId(item.id);
+                              } else setModal(!modal);
                             }}
                             className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-8 w-8 p-0"
                             type="button"
@@ -110,15 +113,20 @@ const ProfilePage = () => {
                               <circle cx="5" cy="12" r="1"></circle>
                             </svg>
                           </button>
+                          {modal && currentPostId === item.id && (
+                            <ModalProfile
+                              modal={modal}
+                              currentPostId={currentPostId}
+                              setModal={setModal}
+                              openMenuButton={openMenuButton}
+                            />
+                          )}
                         </td>
                       </tr>
                     </tbody>
                   ),
               )}
           </table>
-          {modal && (
-            <ModalProfile currentPostId={currentPostId} setModal={setModal} />
-          )}
         </div>
       </div>
       {!postsUser.length && (

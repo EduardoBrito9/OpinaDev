@@ -1,18 +1,20 @@
 import { CiLink } from "react-icons/ci";
 import ButtonProfileOptions from "../elements/ButtonProfileOptions";
 import { FiTrash } from "react-icons/fi";
-import React, { useState } from "react";
-import { RxPencil1 } from "react-icons/rx";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { supabase } from "../../lib/helper/supabaseClient";
 import { Alert } from "@mui/material";
 import { Check } from "@mui/icons-material";
 
 const ModalProfile: React.FC<{
-  currentPostId: string,
+  modal: boolean
+  currentPostId: string;
   setModal: (modal: boolean) => void;
-}> = ({ currentPostId, setModal }) => {
+  openMenuButton: React.MutableRefObject<HTMLButtonElement | null>;
+}> = ({ currentPostId, setModal, modal, openMenuButton }) => {
   const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const deletePost = async () => {
     setLoading(true);
@@ -22,10 +24,40 @@ const ModalProfile: React.FC<{
     } catch (e) {
       console.log(e);
     } finally {
-      setModal(false)
+      setModal(false);
       setLoading(false);
     }
   };
+  const outsideClick = useCallback(() => {
+    setModal(false);
+  }, [setModal]);
+
+  useEffect(() => {
+    const handleClickOutside = ({ target }: MouseEvent) => {
+      const targetTest = target as HTMLElement;
+      if (
+        modal&&
+        modalRef.current &&
+        openMenuButton &&
+        targetTest &&
+        targetTest !== modalRef.current &&
+        !modalRef.current.contains(targetTest as Node) &&
+        targetTest !== openMenuButton.current &&
+        !openMenuButton.current?.contains(targetTest as Node) &&
+        targetTest.namespaceURI !== "http://www.w3.org/2000/svg"
+      ) {
+        outsideClick();
+      }
+    };
+
+    if (modal) {
+      document.addEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [modal, openMenuButton, outsideClick]);
 
   return (
     <section>
@@ -41,19 +73,13 @@ const ModalProfile: React.FC<{
       {modalDelete ? (
         <div>you sure?</div>
       ) : (
-        <div className=" z-40 bg-black  animate-renderAnimationModal absolute space-y-4 top-24 right-1 border border-modalColor py-4 px-5 rounded-md w-[290px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all">
+        <div
+          ref={modalRef}
+          className=" z-40 bg-black  animate-renderAnimationModal absolute space-y-2 right-14 border border-modalColor py-3 px-3 rounded-md w-[180px] font-semibold text-sm text-#fafaf9 fill-#fafaf9 transition-all"
+        >
           <div>
             <ButtonProfileOptions onclickButton={deletePost}>
               Delete <FiTrash className=" w-5 h-5" />
-            </ButtonProfileOptions>
-
-            <ButtonProfileOptions
-              onclickButton={() => {
-                console.log("edit");
-              }}
-            >
-              {" "}
-              Edit <RxPencil1 className=" w-5 h-5" />
             </ButtonProfileOptions>
           </div>
           <ButtonProfileOptions
