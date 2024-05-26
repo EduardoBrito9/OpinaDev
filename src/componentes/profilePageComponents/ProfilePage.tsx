@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { VoteSectionType } from "../../types/propsTypes/typesProps";
 import { supabase } from "../../lib/helper/supabaseClient";
 import {
@@ -9,7 +9,7 @@ import { Link, useParams } from "react-router-dom";
 import { formatarData } from "../../lib/helper/dataConversion/funcData";
 import ModalProfile from "./ModalProfile";
 
-const ProfilePage = () => {
+const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
   const [postsUser, setPostsUser] = useState<VoteSectionType[]>([]);
   const [modal, setModal] = useState(false);
   const [currentPostId, setCurrentPostId] = useState("");
@@ -70,8 +70,16 @@ const ProfilePage = () => {
                           <Link to={`/vote/${item.id}`}>{item.title}</Link>
                         </td>
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
-                          <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground hover:bg-primary/80 bg-green-500">
-                            Active
+                          <div
+                            className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground transition ${
+                              votePastSection?.includes(item)
+                              ? "bg-red-600 hover:bg-red-400 cursor-grab"
+                              : "bg-green-600 hover:bg-green-600 cursor-grab" 
+                            }`}
+                          >
+                            {votePastSection?.includes(item)
+                              ? "Expired"
+                              : "Active"}
                           </div>
                         </td>
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">

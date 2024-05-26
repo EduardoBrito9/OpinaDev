@@ -95,3 +95,12 @@ export interface DateStates {
   date: Date | undefined;
   setDate: (date: Date | undefined) => void;
 }
+
+//modal interface
+
+export interface modalInterface {
+  modal: boolean;
+  currentPostId: string;
+  setModal: (modal: boolean) => void;
+  openMenuButton: React.MutableRefObject<HTMLButtonElement | null>;
+}

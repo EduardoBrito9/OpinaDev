@@ -107,7 +107,7 @@ function App() {
                   />
                 }
               />
-              <Route path="/Profile/:id" element={<ProfilePage />} />
+              <Route path="/Profile/:id" element={<ProfilePage votePastSection={votePastSection} />} />
               <Route
                 path="/criarPublicacao"
                 element={

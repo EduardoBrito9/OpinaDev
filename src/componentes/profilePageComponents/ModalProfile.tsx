@@ -5,13 +5,14 @@ import React, { useRef, useState, useEffect, useCallback } from "react";
 import { supabase } from "../../lib/helper/supabaseClient";
 import { Alert } from "@mui/material";
 import { Check } from "@mui/icons-material";
+import { modalInterface } from "../../types/propsTypes/typesProps";
 
-const ModalProfile: React.FC<{
-  modal: boolean
-  currentPostId: string;
-  setModal: (modal: boolean) => void;
-  openMenuButton: React.MutableRefObject<HTMLButtonElement | null>;
-}> = ({ currentPostId, setModal, modal, openMenuButton }) => {
+const ModalProfile: React.FC<modalInterface> = ({
+  currentPostId,
+  setModal,
+  modal,
+  openMenuButton,
+}) => {
   const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
@@ -36,7 +37,7 @@ const ModalProfile: React.FC<{
     const handleClickOutside = ({ target }: MouseEvent) => {
       const targetTest = target as HTMLElement;
       if (
-        modal&&
+        modal &&
         modalRef.current &&
         openMenuButton &&
         targetTest &&
