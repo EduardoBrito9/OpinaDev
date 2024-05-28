@@ -4,7 +4,7 @@ import { Alert } from "@mui/material";
 const AlertPostSucess = () => {
   return (
     <Alert icon={<Check fontSize="inherit" />} severity="success">
-      Here is a gentle confirmation that your action was successful.
+       Success!
     </Alert>
   );
 };

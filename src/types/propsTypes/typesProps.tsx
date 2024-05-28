@@ -103,4 +103,5 @@ export interface modalInterface {
   currentPostId: string;
   setModal: (modal: boolean) => void;
   openMenuButton: React.MutableRefObject<HTMLButtonElement | null>;
+  setCopied: (copied: boolean) => void;
 }

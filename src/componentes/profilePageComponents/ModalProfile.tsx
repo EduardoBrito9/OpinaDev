@@ -12,6 +12,7 @@ const ModalProfile: React.FC<modalInterface> = ({
   setModal,
   modal,
   openMenuButton,
+  setCopied,
 }) => {
   const [modalDelete, setModalDelete] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,6 +61,21 @@ const ModalProfile: React.FC<modalInterface> = ({
     };
   }, [modal, openMenuButton, outsideClick]);
 
+  const clipboardFunction = async () => {
+    try {
+      navigator.clipboard.writeText(
+        `http://localhost:5173/vote/${currentPostId}`,
+      );
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 1000);
+    }
+  };
+
   return (
     <section>
       {loading && (
@@ -83,11 +99,7 @@ const ModalProfile: React.FC<modalInterface> = ({
               Delete <FiTrash className=" w-5 h-5" />
             </ButtonProfileOptions>
           </div>
-          <ButtonProfileOptions
-            onclickButton={() => {
-              console.log("oi");
-            }}
-          >
+          <ButtonProfileOptions onclickButton={clipboardFunction}>
             Share <CiLink className=" w-5 h-5" />
           </ButtonProfileOptions>
         </div>

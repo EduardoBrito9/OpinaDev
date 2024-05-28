@@ -8,12 +8,14 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { formatarData } from "../../lib/helper/dataConversion/funcData";
 import ModalProfile from "./ModalProfile";
+import AlertPostSucess from "../loadingSystem/AlertPostSucess";
 
 const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
   const [postsUser, setPostsUser] = useState<VoteSectionType[]>([]);
   const [modal, setModal] = useState(false);
   const [currentPostId, setCurrentPostId] = useState("");
   const openMenuButton = useRef<HTMLButtonElement>(null);
+  const [copied, setCopied] = useState(false);
   const { id } = useParams();
 
   const getPostsUser = useCallback(async () => {
@@ -73,8 +75,8 @@ const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
                           <div
                             className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground transition ${
                               votePastSection?.includes(item)
-                              ? "bg-red-600 hover:bg-red-400 cursor-grab"
-                              : "bg-green-600 hover:bg-green-600 cursor-grab" 
+                                ? "bg-red-600 hover:bg-red-400 cursor-grab"
+                                : "bg-green-600 hover:bg-green-600 cursor-grab"
                             }`}
                           >
                             {votePastSection?.includes(item)
@@ -127,6 +129,7 @@ const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
                               currentPostId={currentPostId}
                               setModal={setModal}
                               openMenuButton={openMenuButton}
+                              setCopied={setCopied}
                             />
                           )}
                         </td>
@@ -148,6 +151,11 @@ const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
               Create
             </button>
           </Link>
+        </div>
+      )}
+      {copied && (
+        <div className=" border absolute top-10 right-2/4">
+          <AlertPostSucess />
         </div>
       )}
     </div>
