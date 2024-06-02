@@ -76,7 +76,28 @@ const HomePage: React.FC<VoteSectionType> = ({
           })}
       </div>
       <h1 className="font-bold text-2xl text-red-400">Votos Expirados 🤖</h1>
+
       <div className=" grid grid-cols-3 gap-16 p-5">
+        {loadingPost &&
+          arrayLoading.map((item) => {
+            return (
+              <div
+                key={item}
+                className="border border-modalColor rounded h-40 flex flex-col gap-5 p-4 animate-pulse"
+              >
+                <div className="flex gap-2 items-center">
+                  <button className="w-10 h-10 bg-neutral-800 rounded-full"></button>
+                  <p className="h-2 w-28 bg-neutral-800 rounded-md"></p>
+                </div>
+                <div>
+                  <p className="h-6 w-48 bg-neutral-800 rounded-full"></p>
+                </div>
+                <div>
+                  <p className="h-5 w-20 bg-neutral-800 rounded-full"></p>
+                </div>
+              </div>
+            );
+          })}
         {votePastSection &&
           votePastSection.map((item, index) => {
             return (
