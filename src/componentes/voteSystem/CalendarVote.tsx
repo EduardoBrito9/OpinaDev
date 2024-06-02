@@ -1,45 +1,23 @@
 import { DayPicker } from "react-day-picker";
 import { DateStates } from "../../types/propsTypes/typesProps";
 import { addDays, isAfter, isBefore, startOfDay } from "date-fns";
+import "react-day-picker/dist/style.css";
 
 const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
   const css = `
-  .rdp-caption {
-    display: flex;
+  .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+    background-color: #252525;
+    border-radius: 4px;
+    transition: 0.2s;
   }
-
-  .rdp-month {
-    display:flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items:center;
-  }
-  .rdp {
-    border: 1px solid white;
-    padding: 35px;
-    width: fit-content;
-  }
-  .rdp-table {
-    width: 300px
-  }
+ 
   .my-selected:not([disabled]) { 
-      background-color: #FACC15
+      border-radius: 5px;
+      background-color: #FACC15 !important;
   }
   .my-selected:hover:not([disabled]) { 
-    border-color: blue;
-    color: blue;
-  }
-  .my-today { 
-
-    
-  }
-
-
-  .rdp-head_cell {
-    
-    
-  }
-  
+    background-color: #FACC15;
+}
 `;
   const dataMinima = new Date();
   const maxDate = addDays(dataMinima, 6);
@@ -49,9 +27,10 @@ const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
     );
   };
   return (
-    <div>
+    <div className=" absolute bg-black border border-modalColor rounded-md top-6 animate-renderAnimationModal transition-all">
       <style>{css}</style>
       <DayPicker
+        pagedNavigation
         mode="single"
         required
         selected={date}

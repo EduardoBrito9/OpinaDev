@@ -22,6 +22,7 @@ export interface InputType {
   name?: string;
   value?: string;
   placeholder: string;
+  onclick?: () => void;
 }
 
 //vote types

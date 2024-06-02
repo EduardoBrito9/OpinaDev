@@ -20,6 +20,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [voteOptions, setVoteOptions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [calendarState, setCalendarState] = useState(false)
   const navigate = useNavigate();
   const today = new Date();
   const [date, setDate] = useState<Date | undefined>(today);
@@ -126,17 +127,21 @@ const CreatePost: React.FC<VoteSectionType> = ({
           voteOptions={voteOptions}
         />
         <InputElement
+          onclick={() => {
+            setCalendarState(!calendarState);
+          }}
           onChange={() => {
             console.log("nothing");
           }}
-          placeholder="(opcional) descricao da votacao"
-          value={formattedDate}
+          placeholder="Escolha uma data"
+          value={calendarState ? formattedDate : ''}
           type="text"
           id="Data de encerramento"
           name="Data de encerramento"
+          
         />
 
-        <CalendarVote date={date} setDate={setDate} />
+       { calendarState &&  <CalendarVote date={date} setDate={setDate} />}
 
         <button
           className={`bg-orange-600 py-2 rounded ${
