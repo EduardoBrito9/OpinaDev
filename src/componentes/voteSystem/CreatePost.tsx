@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import VoteOptionsCreate from "./CreateVoteOptions";
 import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
@@ -20,10 +20,9 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [voteOptions, setVoteOptions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [calendarState, setCalendarState] = useState(false)
+  const [calendarState, setCalendarState] = useState(false);
   const navigate = useNavigate();
-  const today = new Date();
-  const [date, setDate] = useState<Date | undefined>(today);
+  const [date, setDate] = useState<Date | undefined>();
   let formattedDate;
   if (date) {
     formattedDate = format(date, "PP");
@@ -134,14 +133,20 @@ const CreatePost: React.FC<VoteSectionType> = ({
             console.log("nothing");
           }}
           placeholder="Escolha uma data"
-          value={calendarState ? formattedDate : ''}
+          value={formattedDate}
           type="text"
           id="Data de encerramento"
           name="Data de encerramento"
-          
         />
 
-       { calendarState &&  <CalendarVote date={date} setDate={setDate} />}
+        {calendarState && (
+          <CalendarVote
+            date={date}
+            setDate={setDate}
+            calendarState={calendarState}
+            setCalendarState={setCalendarState}
+          />
+        )}
 
         <button
           className={`bg-orange-600 py-2 rounded ${

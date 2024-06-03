@@ -2,8 +2,15 @@ import { DayPicker } from "react-day-picker";
 import { DateStates } from "../../types/propsTypes/typesProps";
 import { addDays, isAfter, isBefore, startOfDay } from "date-fns";
 import "react-day-picker/dist/style.css";
+import { useCallback, useEffect, useRef } from "react";
 
-const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
+const CalendarVote: React.FC<DateStates> = ({
+  date,
+  setDate,
+  calendarState,
+  setCalendarState,
+}) => {
+  const calendar = useRef<HTMLDivElement>(null);
   const css = `
   .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
     background-color: #252525;
@@ -26,8 +33,32 @@ const CalendarVote: React.FC<DateStates> = ({ date, setDate }) => {
       isBefore(startOfDay(day), startOfDay(dataMinima)) || isAfter(day, maxDate)
     );
   };
+
+  const outsideClick = useCallback(() => {
+    setCalendarState(false);
+  }, [setCalendarState]);
+
+  useEffect(() => {
+    const handleClickOutside = ({ target }: MouseEvent) => {
+      if (
+        target === calendar?.current
+      ) {
+        outsideClick();
+      }
+    };
+    if (calendarState) {
+      document.addEventListener("click", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, [calendarState, outsideClick]);
+
   return (
-    <div className=" absolute bg-black border border-modalColor rounded-md top-6 animate-renderAnimationModal transition-all">
+    <div
+      ref={calendar}
+      className=" absolute bg-black border border-modalColor rounded-md top-6 animate-renderAnimationModal transition-all"
+    >
       <style>{css}</style>
       <DayPicker
         pagedNavigation
