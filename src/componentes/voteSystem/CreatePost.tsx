@@ -1,4 +1,4 @@
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import VoteOptionsCreate from "./CreateVoteOptions";
 import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
@@ -21,7 +21,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [calendarState, setCalendarState] = useState(false);
-  const input = useRef<HTMLInputElement>(null)
+  const input = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const [date, setDate] = useState<Date | undefined>();
   let formattedDate;
@@ -84,17 +84,17 @@ const CreatePost: React.FC<VoteSectionType> = ({
 
   return (
     <div className=" max-w-5xl mx-auto">
+      {isLoading && (
+        <div className=" mx-auto max-w-fit">
+          <AlertPostLoading />
+        </div>
+      )}
       <ul className="absolute top-10 right-[45%] z-30 space-y-2"></ul>
 
       <form
         className=" flex  flex-col  gap-7 text-white max-w-[1000px] relative"
         onSubmit={postVerification}
       >
-        {isLoading && (
-          <div className=" absolute border">
-            <AlertPostLoading />
-          </div>
-        )}
         {isSuccess && (
           <div>
             <AlertPostSucess />
@@ -135,7 +135,7 @@ const CreatePost: React.FC<VoteSectionType> = ({
           }}
           input={input}
           placeholder="Escolha uma data"
-          value={formattedDate ? formattedDate : ''}
+          value={formattedDate ? formattedDate : ""}
           type="text"
           id="Data de encerramento"
           name="Data de encerramento"
