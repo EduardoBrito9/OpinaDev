@@ -9,6 +9,7 @@ const Input: React.FC<InputType> = ({
   value,
   placeholder,
   onclick,
+  input,
 }) => {
   return (
     <div className=" space-y-2">
@@ -16,7 +17,10 @@ const Input: React.FC<InputType> = ({
         {name}
       </label>
       <input
-        className={`bg-black py-3 px-4 border border-modalColor rounded text-sm text-#F3F0F2 outline-none focus:border-orange-500 focus:border-opacity-50 w-full ${onclick ? 'hover: cursor-default' : ''}`}
+        ref={input}
+        className={`bg-black py-3 px-4 border border-modalColor rounded text-sm text-#F3F0F2 outline-none focus:border-orange-500 focus:border-opacity-50 w-full ${
+          onclick ? "hover: cursor-default" : ""
+        }`}
         placeholder={placeholder}
         type={type}
         onChange={onChange}

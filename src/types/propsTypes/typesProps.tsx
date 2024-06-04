@@ -23,7 +23,7 @@ export interface InputType {
   value?: string;
   placeholder: string;
   onclick?: () => void;
-  inputref?: React.LegacyRef<HTMLInputElement | undefined>;
+  input?:React.MutableRefObject<HTMLInputElement | null>;
 }
 
 //vote types
@@ -98,6 +98,7 @@ export interface DateStates {
   setDate: (date: Date | undefined) => void;
   calendarState: boolean;
   setCalendarState: (calendarState: boolean) => void;
+  input?: React.MutableRefObject<HTMLInputElement | null>;
 }
 
 //modal interface

@@ -9,6 +9,7 @@ const CalendarVote: React.FC<DateStates> = ({
   setDate,
   calendarState,
   setCalendarState,
+  input
 }) => {
   const calendar = useRef<HTMLDivElement>(null);
   const css = `
@@ -35,13 +36,17 @@ const CalendarVote: React.FC<DateStates> = ({
   };
 
   const outsideClick = useCallback(() => {
+    console.log('heyy');
     setCalendarState(false);
   }, [setCalendarState]);
 
   useEffect(() => {
     const handleClickOutside = ({ target }: MouseEvent) => {
       if (
-        target === calendar?.current
+       calendarState &&
+       target !== calendar.current &&
+       target !== input?.current && 
+       !calendar.current?.contains(target as Node)
       ) {
         outsideClick();
       }
@@ -52,7 +57,7 @@ const CalendarVote: React.FC<DateStates> = ({
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, [calendarState, outsideClick]);
+  }, [calendarState, outsideClick, input]);
 
   return (
     <div
