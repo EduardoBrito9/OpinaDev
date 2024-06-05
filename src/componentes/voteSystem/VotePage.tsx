@@ -13,7 +13,7 @@ import {
 import useMyContext from "../../context/functionContext";
 import CommentsComponent from "../comments/CommentsComponent";
 
-const VotePage: React.FC<VoteSectionType> = ({votePastSection}) => {
+const VotePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
   const { user } = useMyContext();
   const { id } = useParams();
 
@@ -62,8 +62,9 @@ const VotePage: React.FC<VoteSectionType> = ({votePastSection}) => {
     };
     const columnName = "option" + index;
     if (
+      !votePastSection?.some((idSearch) => idSearch.id === id) &&
       validateVoteOptionUser(tableNumber, columnName) &&
-      voteTable.includes(user.id)
+      !voteTable.includes(user.id)
     ) {
       voteTable.push(user.id);
       const updateObj: UpdateData = {};
