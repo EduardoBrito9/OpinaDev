@@ -24,6 +24,7 @@ export interface InputType {
   placeholder: string;
   onclick?: () => void;
   input?:React.MutableRefObject<HTMLInputElement | null>;
+  votePastSection?: VoteTypeStructure[];
 }
 
 //vote types
@@ -76,6 +77,10 @@ export interface UpdateVote {
 }
 
 //comments
+
+export interface intComments {
+  votePastSection?: VoteTypeStructure[];
+}
 
 export interface CommentsDataType {
   commentsColumn: string;

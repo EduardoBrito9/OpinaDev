@@ -3,12 +3,12 @@ import InputElement from "../elements/InputElement";
 import { supabase } from "../../lib/helper/supabaseClient";
 import useMyContext from "../../context/functionContext";
 import { useParams } from "react-router-dom";
-import { CommentsDataType } from "../../types/propsTypes/typesProps";
+import { CommentsDataType, intComments } from "../../types/propsTypes/typesProps";
 import { validateDataComments } from "../../validateFunctions/validateDataType";
 import ModalComment from "./ModalComment";
 import { formatarData } from "../../lib/helper/dataConversion/funcData";
 
-const CommentsComponent = () => {
+const CommentsComponent: React.FC<intComments> = ({votePastSection}) => {
   const { id } = useParams();
   const { user } = useMyContext();
   const [currentComment, setCurrentComments] = useState("");
@@ -58,6 +58,7 @@ const CommentsComponent = () => {
               placeholder="comente..."
               type="text"
               value={currentComment}
+              votePastSection={votePastSection}
             />
           </form>
           <div className=" flex flex-col gap-4">

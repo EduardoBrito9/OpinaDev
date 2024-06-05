@@ -13,7 +13,7 @@ import {
 import useMyContext from "../../context/functionContext";
 import CommentsComponent from "../comments/CommentsComponent";
 
-const VotePage: React.FC<VoteSectionType> = () => {
+const VotePage: React.FC<VoteSectionType> = ({votePastSection}) => {
   const { user } = useMyContext();
   const { id } = useParams();
 
@@ -169,7 +169,7 @@ const VotePage: React.FC<VoteSectionType> = () => {
               )}
           </div>
         </div>
-        <CommentsComponent />
+        <CommentsComponent votePastSection={votePastSection} />
       </div>
     </section>
   );

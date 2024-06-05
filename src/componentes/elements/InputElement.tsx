@@ -1,5 +1,6 @@
 import React from "react";
 import { InputType } from "../../types/propsTypes/typesProps";
+import { useParams } from "react-router-dom";
 
 const Input: React.FC<InputType> = ({
   type,
@@ -10,7 +11,10 @@ const Input: React.FC<InputType> = ({
   placeholder,
   onclick,
   input,
+  votePastSection
 }) => {
+  const { id : IDD} = useParams();
+  if(IDD)console.log(IDD, votePastSection)
   return (
     <div className=" space-y-2">
       <label htmlFor={id} className=" text-sm">
@@ -30,6 +34,7 @@ const Input: React.FC<InputType> = ({
         autoComplete="off"
         onClick={onclick}
         readOnly={onclick ? true : false}
+        disabled={votePastSection && IDD && votePastSection.some(idSearch => idSearch.id === IDD) ? true :false}
       />
     </div>
   );
