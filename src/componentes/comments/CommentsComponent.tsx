@@ -63,7 +63,7 @@ const CommentsComponent: React.FC<intComments> = ({votePastSection}) => {
           </form>
           <div className=" flex flex-col gap-4">
             {comments &&
-              comments.map((item) => (
+              comments.map((item) => (  
                 <div
                   key={item.id}
                   className={`w-full flex space-x-5 mb-5 relative ${

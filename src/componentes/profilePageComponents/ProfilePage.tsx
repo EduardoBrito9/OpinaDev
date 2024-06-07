@@ -18,6 +18,16 @@ const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
   const [copied, setCopied] = useState(false);
   const { id } = useParams();
 
+  postsUser.sort((postA, postB) => {
+    if ('endDate' in postA && 'endDate' in postB && typeof postA.endDate === 'string' && typeof postB.endDate === 'string') {
+      const dateA = new Date(postA.endDate).getTime();
+      const dateB = new Date(postB.endDate).getTime();
+      return dateB - dateA; 
+    }
+    return 0;
+  });
+
+  
   const getPostsUser = useCallback(async () => {
     try {
       const { data } = await supabase
@@ -74,12 +84,16 @@ const ProfilePage: React.FC<VoteSectionType> = ({ votePastSection }) => {
                         <td className="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">
                           <div
                             className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent text-primary-foreground transition ${
-                              votePastSection?.includes(item)
+                              votePastSection?.some(
+                                (itemS) => itemS.id === item.id,
+                              )
                                 ? "bg-red-600 hover:bg-red-400 cursor-grab"
                                 : "bg-green-600 hover:bg-green-600 cursor-grab"
                             }`}
                           >
-                            {votePastSection?.includes(item)
+                            {votePastSection?.some(
+                              (itemS) => itemS.id === item.id,
+                            )
                               ? "Expired"
                               : "Active"}
                           </div>
