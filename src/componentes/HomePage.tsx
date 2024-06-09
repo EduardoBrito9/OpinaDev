@@ -13,6 +13,12 @@ const HomePage: React.FC<VoteSectionType> = ({
   };
   const arrayEmoji = ["🔔", "🤖", "🎷", "📺", "🤔"];
   const arrayLoading = [1, 2, 3];
+  const borderPost = [
+    "ring-green-500 bg-green-500",
+    "ring-indigo-500 bg-indigo-500",
+    "ring-orange-500 bg-orange-500",
+    "ring-purple-500 bg-purple-500",
+  ];
 
   return (
     <section className="space-y-9 text-green-500 ">
@@ -66,7 +72,11 @@ const HomePage: React.FC<VoteSectionType> = ({
                         {arrayEmoji[numeroSorteado()]}
                       </span>
                     </div>
-                    <div className=" -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ring-green-500 bg-green-500 bg-opacity-10"></div>
+                    <div
+                      className={` -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ${
+                        borderPost[numeroSorteado()]
+                      } bg-opacity-10`}
+                    ></div>
                   </div>
                 </Link>
               );
@@ -128,7 +138,11 @@ const HomePage: React.FC<VoteSectionType> = ({
                       {arrayEmoji[numeroSorteado()]}
                     </span>
                   </div>
-                  <div className=" -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ring-green-500 bg-green-500 bg-opacity-10"></div>
+                  <div
+                    className={` -z-10 absolute top-0 right-0 translate-x-3 translate-y-3 w-full h-full ring-1  rounded-md ${
+                      borderPost[numeroSorteado()]
+                    } bg-opacity-10`}
+                  ></div>
                 </div>
               </Link>
             );
